@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/th_quizcluster/db" VERSION="2026031800" COMMENT="Cluster mark settings per quiz"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+
+  <TABLES>
+    <TABLE NAME="local_th_quizcluster_cfg" COMMENT="Config auto/manual marks for cluster questions per quiz">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="manualslotmarks" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0"
+               COMMENT="1 = teacher edits slot marks manually, 0 = auto from cluster defaultmark"/>
+        <FIELD NAME="enabletagrandom" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="quizid_uniq" TYPE="unique" FIELDS="quizid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="local_th_qc_attemptmk" COMMENT="Snapshot maxmark per attempt slot">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="questionusageid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="slot" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="maxmark" TYPE="number" LENGTH="12" DECIMALS="5" NOTNULL="true" DEFAULT="0"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
+      </FIELDS>
+
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+
+      <INDEXES>
+        <INDEX NAME="attempt_slot_uniq" UNIQUE="true" FIELDS="attemptid,slot"/>
+        <INDEX NAME="attemptid_idx" UNIQUE="false" FIELDS="attemptid"/>
+        <INDEX NAME="qubaid_idx" UNIQUE="false" FIELDS="questionusageid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

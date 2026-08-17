@@ -1,0 +1,179 @@
+.bar-header {
+  background-color: #2E92CE;
+}
+
+ion-side-menu li .item {
+  background-color: #14c7a9;
+  border-color: #2acc1f;
+  color: #2E92CE;
+
+}
+
+ion-side-menu li.item {
+  border-color: #2E92CE;
+  }
+
+ion-side-menu li.item.item-divider {
+  background-color: #2E92CE;
+}
+
+.ion-ionic {
+  color: #2E92CE;
+}
+.ion-home {
+  color: #2E92CE;
+}
+.ion-ios-bell {
+  color: #2E92CE;
+}
+.ion-chatbox {
+  color: #2E92CE;
+}
+.ion-calendar {
+  color: #2E92CE;
+}
+.ion-folder {
+  color: #2E92CE;
+}
+.ion-earth {
+  color: #2E92CE;
+}
+.ion-help-buoy {
+  color: #2E92CE;
+}
+.ion-gear-b {
+  color: #2E92CE;
+}
+.ion-log-out {
+  color: #2E92CE;
+}
+
+.ion-ionic:before {
+  content: "\f3ea";
+}
+
+.mm-site_mm_courses .tabs-icon-left {
+  background-color: #2E92CE;
+}
+.mm-site_mm_courses section h2 span {
+  font-weight: bold;
+}
+
+/* 3.5 styles */
+
+/** Header color */
+.toolbar-background-md,
+.toolbar-background-ios,
+.toolbar-background-wp {
+  background: #2E92CE;
+}
+
+/* Bottom tabs selected color */
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon,
+.tabs-md .core-tabs-bar a[aria-selected=true].tab-slide .tab-button-icon,
+.core-tabs-bar .tabs-md a[aria-selected=true].tab-slide .tab-button-icon,
+.tabs-ios .tab-button[aria-selected=true] .tab-button-icon,
+.tabs-md .core-tabs-bar a[aria-selected=true].tab-slide .tab-button-icon,
+.core-tabs-bar .tabs-ios a[aria-selected=true].tab-slide .tab-button-icon,
+.tabs-wp .tab-button[aria-selected=true] .tab-button-icon,
+.tabs-wp .core-tabs-bar a[aria-selected=true].tab-slide .tab-button-icon,
+.core-tabs-bar .tabs-wp a[aria-selected=true].tab-slide .tab-button-icon {
+  color: #2E92CE;
+}
+
+/* Tabs color*/
+.core-tabs-bar .slides a.tab-slide[aria-selected=true] {
+  color: #2E92CE !important;
+  border-bottom-color: #5069A1 !important;
+}
+
+/* Loading spinner */
+.spinner circle, .spinner line {
+    stroke: #2E92CE;
+}
+
+/* Buttons */
+.button-md,
+.button-ios,
+.button-wp,
+.fab-ios,
+.fab-md,
+.fab-wp {
+  background-color: #2E92CE;
+}
+
+.button-outline-md,
+.button-outline-ios,
+.button-outline-wp {
+    border-color: white;
+    background-color: #2E92CE;
+    color: white;
+}
+
+.button-clear-md,
+.button-clear-ios,
+.button-clear-wp {
+  background-color: transparent;
+  color: #2E92CE;
+}
+
+/* More icon colors */
+page-core-mainmenu-more .ion-md-notifications,
+page-core-mainmenu-more .ion-ios-notifications,
+page-core-mainmenu-more .ion-md-notifications {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-stats,
+page-core-mainmenu-more .ion-ios-stats,
+page-core-mainmenu-more .ion-md-stats {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-map,
+page-core-mainmenu-more .ion-ios-map,
+page-core-mainmenu-more .ion-wp-map {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-folder,
+page-core-mainmenu-more .ion-ios-folder,
+page-core-mainmenu-more .ion-wp-folder {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-link,
+page-core-mainmenu-more .ion-ios-link,
+page-core-mainmenu-more .ion-wp-link {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-globe,
+page-core-mainmenu-more .ion-ios-globe,
+page-core-mainmenu-more .ion-wp-globe {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-qr-scanner,
+page-core-mainmenu-more .ion-ios-qr-scanner,
+page-core-mainmenu-more .ion-wp-qr-scanner {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-help-buoy,
+page-core-mainmenu-more .ion-ios-help-buoy,
+page-core-mainmenu-more .ion-wp-help-buoy {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-cog,
+page-core-mainmenu-more .ion-ios-cog,
+page-core-mainmenu-more .ion-wp-cog {
+  color: #2E92CE;
+}
+
+page-core-mainmenu-more .ion-md-log-out,
+page-core-mainmenu-more .ion-ios-log-out,
+page-core-mainmenu-more .ion-wp-log-out {
+  color: #2E92CE;
+}

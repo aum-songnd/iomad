@@ -1,0 +1,81 @@
+<div id="{{qid}}" class="que multichoice deferredfeedback notyetanswered">
+    <div class="content">
+        <div class="formulation clearfix">
+            <h4 class="accesshide">Question text</h4>
+            <div class="qtext">
+                {{{questiontext}}}
+            </div>
+            <fieldset class="ablock no-overflow visual-scroll-x">
+                <legend class="prompt h6 font-weight-normal sr-only"><span class="sr-only">Question 1</span> Answer</legend>
+                <div class="answer">
+                    {{#answers}}
+                        {{>qtype_thvstepcluster/multichoice_answer}}
+                    {{/answers}}
+                </div>
+                {{^correctness}}
+                    {{^ismultiple}}
+                        {{#checked_radio}}
+                            <div id="{{clearchoicefieldname}}" class="qtype_multichoice_clearchoice" aria-hidden="true">
+                                <input type="radio"
+                                       name="{{inputname}}"
+                                       id="{{inputname}}-clearchoice"
+                                       value="-1"
+                                       class="sr-only"
+                                       aria-hidden="true">
+                                <label for="{{inputname}}-clearchoice">
+                                    <a tabindex="-1" role="button" class="btn btn-link ml-3 mt-n1" href="#">
+                                        {{#str}} clearmychoice, qtype_thvstepcluster{{/str}}
+                                    </a>
+                                </label>
+                            </div>
+                        {{/checked_radio}}
+
+                        {{^checked_radio}}
+                            <div id="{{clearchoicefieldname}}" class="qtype_multichoice_clearchoice sr-only" aria-hidden="true">
+                                <input type="radio"
+                                       name="{{inputname}}"
+                                       id="{{inputname}}-clearchoice"
+                                       value="-1"
+                                       class="sr-only"
+                                       aria-hidden="true">
+                                <label for="{{inputname}}-clearchoice">
+                                    <a tabindex="-1" role="button" class="btn btn-link ml-3 mt-n1" href="#">
+                                        {{#str}} clearmychoice, qtype_thvstepcluster{{/str}}
+                                    </a>
+                                </label>
+                            </div>
+                        {{/checked_radio}}
+                    {{/ismultiple}}
+                {{/correctness}}
+            </fieldset>
+        </div>
+        {{#correctness}}
+            <div class="outcome clearfix">
+                <h4 class="accesshide">Phản hồi</h4>
+                {{#feedback}}
+                    <div class="feedback">{{{feedbacktext}}}</div>
+                {{/feedback}}
+                {{#generalfeedback}}
+                    {{{generalfeedbacktext}}}
+                {{/generalfeedback}}
+                {{#haspartialcorrect}}
+                    <div class="partialcorrectinfo">
+                        {{#str}} youhavecorrectlyselected, qtype_thvstepcluster, {{correctselectedcount}} {{/str}}
+                    </div>
+                {{/haspartialcorrect}}
+                {{#rightanswer}}
+                    <div class="rightanswer">
+                        {{#hasmultiplecorrect}}
+                            {{#str}} correctanswersare, qtype_thvstepcluster{{/str}}
+                        {{/hasmultiplecorrect}}
+                        {{^hasmultiplecorrect}}
+                            {{#str}} correctansweris, qtype_multichoice{{/str}}
+                        {{/hasmultiplecorrect}}
+                        <br>
+                        {{{answer}}}
+                    </div>
+                {{/rightanswer}}
+            </div>
+        {{/correctness}}
+    </div>
+</div>

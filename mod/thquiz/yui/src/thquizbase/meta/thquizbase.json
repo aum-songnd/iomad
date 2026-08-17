@@ -1,0 +1,8 @@
+{
+    "moodle-mod_thquiz-thquizbase": {
+        "requires": [
+            "base",
+            "node"
+        ]
+    }
+}

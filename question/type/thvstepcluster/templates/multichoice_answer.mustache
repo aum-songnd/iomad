@@ -1,0 +1,71 @@
+<div class="r0 {{#incorrect}}incorrect{{/incorrect}} {{#correct}}correct{{/correct}}">
+    {{#ismultiple}}
+
+        {{#correctness}}
+            <input type="hidden"
+                   name="{{inputname}}_choice{{answervalue}}"
+                   value="0"
+                   disabled>
+
+            <input type="checkbox"
+                   name="{{inputname}}_choice{{answervalue}}"
+                   value="1"
+                   id="{{inputname}}_choice{{answervalue}}"
+                   aria-labelledby="{{inputname}}-{{answervalue}}_label"
+                   {{#checked}}checked{{/checked}}
+                   disabled>
+        {{/correctness}}
+
+        {{^correctness}}
+            <input type="hidden"
+                   name="{{inputname}}_choice{{answervalue}}"
+                   value="0">
+
+            <input type="checkbox"
+                   name="{{inputname}}_choice{{answervalue}}"
+                   value="1"
+                   id="{{inputname}}_choice{{answervalue}}"
+                   aria-labelledby="{{inputname}}-{{answervalue}}_label"
+                   {{#checked}}checked{{/checked}}>
+        {{/correctness}}
+
+    {{/ismultiple}}
+
+    {{^ismultiple}}
+
+        {{#correctness}}
+            <input type="radio"
+                   name="{{inputname}}"
+                   value="{{answervalue}}"
+                   id="{{inputname}}-{{answervalue}}"
+                   aria-labelledby="{{inputname}}-{{answervalue}}_label"
+                   {{#checked}}checked{{/checked}}
+                   disabled>
+        {{/correctness}}
+
+        {{^correctness}}
+            <input type="radio"
+                   name="{{inputname}}"
+                   value="{{answervalue}}"
+                   id="{{inputname}}-{{answervalue}}"
+                   aria-labelledby="{{inputname}}-{{answervalue}}_label"
+                   {{#checked}}checked{{/checked}}>
+        {{/correctness}}
+
+    {{/ismultiple}}
+
+    <div class="d-flex w-auto" id="{{inputname}}-{{answervalue}}_label" data-region="answer-label">
+        <span class="answernumber">{{answernumber}}. </span>
+        <div class="flex-fill ml-1">
+            {{{answer}}}
+        </div>
+    </div>
+    {{#incorrect}} {{{iconincorrect}}} {{/incorrect}}
+    {{#correct}}   {{{iconcorrect}}}   {{/correct}}
+
+    {{#showfeedback}}
+        <div class="specificfeedback">
+            {{{feedback}}}
+        </div>
+    {{/showfeedback}}
+</div>

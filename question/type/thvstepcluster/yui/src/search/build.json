@@ -1,0 +1,10 @@
+{
+    "name": "moodle-qtype_thvstepcluster-search",
+    "builds": {
+        "moodle-qtype_thvstepcluster-search": {
+            "jsfiles": [
+                "search.js"
+            ]
+        }
+    }
+}

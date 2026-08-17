@@ -1,0 +1,7 @@
+bydate,thquiz_grading
+bystudentidnumber,thquiz_grading
+bystudentfirstname,thquiz_grading
+bystudentlastname,thquiz_grading
+gradingattemptwithidnumber,thquiz_grading
+orderattempts,thquiz_grading
+randomly,thquiz_grading

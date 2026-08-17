@@ -1,0 +1,211 @@
+.activityiconcontainer.administration:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.administration:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(45%) sepia(46%) saturate(3819%) hue-rotate(260deg) brightness(101%) contrast(87%);
+}
+
+.activityiconcontainer.assessment:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.assessment:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(36%) sepia(98%) saturate(6969%) hue-rotate(315deg) brightness(90%) contrast(119%);
+}
+
+.activityiconcontainer.collaboration:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.collaboration:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(25%) sepia(54%) saturate(6226%) hue-rotate(245deg) brightness(100%) contrast(102%);
+}
+
+.activityiconcontainer.communication:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.communication:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(48%) sepia(74%) saturate(4887%) hue-rotate(11deg) brightness(102%) contrast(101%);
+}
+
+.activityiconcontainer.content:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.content:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(49%) sepia(52%) saturate(4675%) hue-rotate(156deg) brightness(89%) contrast(102%);
+}
+
+.activityiconcontainer.interactivecontent:not(.isbranded) .activityicon:not(.nofilter),
+.activityiconcontainer.interactivecontent:not(.isbranded) .icon:not(.nofilter) {
+  filter: invert(25%) sepia(63%) saturate(1152%) hue-rotate(344deg) brightness(94%) contrast(91%);
+}
+
+.activityiconcontainer.other:not(.isbranded) .activityicon.nofilter,
+.activityiconcontainer.other:not(.isbranded) .icon.nofilter {
+  filter: none;
+}
+
+img[src*="th_lambda_st/thrdassign"],
+img[src*="th_lambda_st/quiz"],
+img[src*="th_lambda_st/thquiz"],
+img[src*="th_lambda_st/workshop"],
+img[src*="th_lambda_st/assign"],
+img[src*="th_lambda_st/exportexam"],
+img[src*="th_lambda_st/qaa"],
+img[src*="th_lambda_st/thurl"],
+img[src*="th_lambda_st/url"],
+img[src*="th_lambda_st/thpage"] {
+    filter: invert(36%) sepia(98%) saturate(6969%) hue-rotate(315deg) brightness(90%) contrast(119%) !important;
+}
+
+
+img[src*="th_lambda_st/book"],
+img[src*="th_lambda_st/lti"],
+img[src*="th_lambda_st/resource"],
+img[src*="th_lambda_st/mod_page"],
+img[src*="th_lambda_st/folder"],
+img[src*="th_lambda_st/h5pactivity"],
+img[src*="th_lambda_st/imscp"],
+img[src*="th_lambda_st/lesson"],
+img[src*="th_lambda_st/page"],
+img[src*="th_lambda_st/scorm"],
+img[src*="th_lambda_st/label"],
+img[src*="/f/"][src*="th_lambda_st"][src*="filtericon"],
+img.navicon[src*="/f/"][src*="th_lambda_st"]{
+  filter: invert(49%) sepia(52%) saturate(4675%) hue-rotate(156deg) brightness(89%) contrast(102%) !important;
+}
+
+img[src*="th_lambda_st/data"],
+img[src*="th_lambda_st/forum"],
+img[src*="th_lambda_st/glossary"],
+img[src*="th_lambda_st/wiki"],
+img[src*="th_lambda_st/thglossary"] {
+    filter: invert(25%) sepia(54%) saturate(6226%) hue-rotate(245deg) brightness(100%) contrast(102%) !important;
+}
+
+
+img[src*="th_lambda_st/survey"],
+img[src*="th_lambda_st/chat"],
+img[src*="th_lambda_st/vpl"],
+img[src*="th_lambda_st/choice"],
+img[src*="th_lambda_st/feedback"] {
+    filter: invert(48%) sepia(74%) saturate(4887%) hue-rotate(11deg) brightness(102%) contrast(101%) !important;
+}
+
+
+
+.modtype_resource .activityiconcontainer .activityicon {
+    filter: invert(49%) sepia(52%) saturate(4675%) hue-rotate(156deg) brightness(89%) contrast(102%);
+  }
+.activityicon {
+    height: 32px;
+    width: 32px;
+}
+.activityiconcontainer .activityicon {
+    height: 32px !important;
+    width: 32px !important;
+}
+
+.activityiconcontainer .activityicon, .block.block_recentlyaccesseditems .card img.icon {
+    margin: 0 !important;
+    height: 32px;
+    width: 32px;
+}
+
+.block_navigation .block_tree p.hasicon .icon {
+    width: 16px !important;
+    height: 16px !important;
+}
+.block_navigation .block_tree p.hasicon img {
+    width: 24px;
+    height: 24px;
+    margin-top: 0px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+.block-timeline .media-list img.icon {
+    background: none !important;
+}
+
+
+.automatic-completion-wrapper {
+    position: relative;
+}
+
+.completion-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 999;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: none;
+    width: 180px;
+} 
+
+.activity-information [data-region="completion-info"] .badge.badge-light {
+    height: 14px;
+    border: 1px solid #999;
+    line-height: 14px;
+    margin-top: 1px;
+    vertical-align: text-top;
+}
+
+.completion-dropdown .badge.alert-success {
+    background-color: #28a745 !important;
+    color: #fff !important;
+    border: 1px solid #28a745;
+    width: auto;
+    height: auto;
+    display: flex !important;
+}
+.completion-dropdown .badge.badge-light {
+    width: auto;
+    height: auto;
+    display: flex !important;
+}
+.completion-dropdown .badge.alert-danger {
+  width: auto;
+  height: auto;
+  display: flex !important;
+  background-color: #df5360 !important;
+  color: #fff !important;
+  border: 1px solid #dc3545;
+}
+.completion-dropdown .badge.alert-success > img.icon, .activity-information .badge.alert-danger > img.icon {
+    display: none;
+}
+
+.font-weight-normal {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    padding-left: 5px;
+}
+
+.completion-dropdown .badge {
+    text-align: left;
+}
+
+.fp-thumbnail img {
+    filter: none !important;
+}
+
+.activityiconcontainer {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 0 !important;
+  }
+  
+  .activityiconcontainer.assessment {
+    background: none !important;
+  }
+  .activityiconcontainer.content {
+    background: none !important;
+  }
+  .activityiconcontainer.communication {
+    background: none !important;
+  }
+  .activityiconcontainer.collaboration {
+    background: none !important;
+  }
+  .activityiconcontainer.other {
+    background: none !important;
+  }
+  

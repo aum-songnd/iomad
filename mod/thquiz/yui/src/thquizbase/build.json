@@ -1,0 +1,10 @@
+{
+    "name": "moodle-mod_thquiz-thquizbase",
+    "builds": {
+        "moodle-mod_thquiz-thquizbase": {
+            "jsfiles": [
+                "thquizbase.js"
+            ]
+        }
+    }
+}

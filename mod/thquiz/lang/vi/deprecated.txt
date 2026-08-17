@@ -1,0 +1,6 @@
+completionpass,mod_thquiz
+completionpassdesc,mod_thquiz
+completionpass_help,mod_thquiz
+completiondetail:passgrade,mod_thquiz
+gradetopassnotset,mod_thquiz
+basicideasofthquiz,mod_thquiz

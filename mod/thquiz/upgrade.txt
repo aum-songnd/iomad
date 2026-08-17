@@ -1,0 +1,263 @@
+This files describes API changes in the thquiz code.
+
+=== 4.1.7 ===
+* A thquiz_structure_modified callback has been added for thquiz_ plugins, called from
+  thquiz_update_sumgrades(). Plugins can implement this by creating a `thquiz_structure_modified`
+  class in their namespace with a static `callback` method, see thquiz_statistics as an example.
+
+=== 4.1.1 ===
+* 'firstslotid' value is not used in section_shuffle_updated event anymore.
+
+=== 4.1 ===
+
+* thquiz_has_question_use is now deprecated. Use mod_thquiz\structure::has_use_capability istead.
+
+=== 4.0.3, 4.1 ===
+
+* If a thquiz is sequential the external functions mod_thquiz_external::get_attempt_data, mod_thquiz_external::get_attempt_summary will not return any data
+related to out of sequence question except while reviewing the thquiz (MDL-75210).
+
+=== 4.0.2, 4.1 ===
+
+* No external code should be calling thquiz_overview_report::regrade_attempt because it is an
+  internal method of the thquiz_overview plugin. But if you are incorrectly using it, be aware
+  that the API changed slightly. It now returns an array listing any questions which could
+  not be regraded.
+* New method called get_number_of_unanswered_questions() has been added to mod/thquiz/attemptlib.php
+  to get the total number of unanswered questions in the current attempt.
+
+=== 4.0 ===
+
+* The following API methods have a new parameter, $studentisonline, to define whether the student is currently interacting:
+  - process_finish() in mod/thquiz/attemptlib.php
+  - thquiz_send_confirmation() in mod/thquiz/locallib.php
+  - thquiz_send_notification_messages() in mod/thquiz/locallib.php
+* The completionpass criteria has been moved to core as 'completionpassgrade'. Refer to completion/upgrade.txt for
+  further information.
+* New argument thquizhasquestions has been added to public methods: view_information in mod/thquiz/renderer.php.
+* The function no_questions_message() in class mod_thquiz_renderer is deprecated. There is no replacement.
+* Related to the Moodle 4.0 question bank changes, the thquiz_slots database table.
+  The fields removed are now manage by new core_question tables:
+  - question_references -> Records where a specific question is used.
+  - question_set_references -> Records where groups of questions are used (e.g. random questions).
+* The thquiz_slots_tags database table has been removed entirely, as has the get_slot_tags_for_slot_id() method
+  from mod/thquiz/classes/structure.php and the the locallib.php functions thquiz_retrieve_slot_tags and
+  thquiz_retrieve_slot_tag_ids. This information is now stored in question_set_references
+  and can be accessed in the results of qbank_helper::get_question_structure.
+
+
+=== 3.11 ===
+
+* External function mod_thquiz_external::get_user_best_grade now returns and additional optional field:
+  - gradetopass: The grade to pass the thquiz (if set)
+
+
+=== 3.10.1 ===
+
+* External functions mod_thquiz_external::get_attempt_data, mod_thquiz_external::get_attempt_summary
+  and mod_thquiz_external::get_attempt_review now return a new additional optional field:
+   - settings: Containing the question definition settings for displaying the question in an external system.
+
+=== 3.10 ===
+
+* External functions mod_thquiz_external::get_attempt_data, mod_thquiz_external::get_attempt_summary
+  and mod_thquiz_external::get_attempt_review now return a new additional optional field:
+   - responsefileareas: Containing the user responses to questions file area names including files.
+
+=== 3.7 ===
+
+* Thquiz_cron() has been removed. Sub-plugins should implemented scheduled tasks, however legacy cron in subplugins are
+  supported.
+
+=== 3.6 ===
+
+* The following renamed classes have been completely removed:
+  - thquiz_question_bank_view (now: mod_thquiz\question\bank\custom_view)
+  - question_bank_add_to_thquiz_action_column (now: mod_thquiz\question\bank\add_action_column)
+  - question_bank_question_name_text_column (now: mod_thquiz\question\bank\question_name_text_column)
+
+=== 3.5 ===
+* Removed questionbank.ajax.php. Please use the thquiz_question_bank fragment instead.
+* Adding "random" questions to a thquiz via thquiz_add_thquiz_question() has been deprecated. Please use thquiz_add_random_questions().
+
+=== 3.3.2 ===
+
+* thquiz_refresh_events() Now takes two additional parameters to refine the update to a specific instance. This function
+  now optionally takes the module instance object or ID, and the course module object or ID. Please try to send the full
+  objects instead of the ids to save DB calls.
+
+=== 3.2 ===
+
+* External functions mod_thquiz_external::get_attempt_data, mod_thquiz_external::get_attempt_summary
+  and mod_thquiz_external::get_attempt_review now return additional optional fields:
+   - blockedbyprevious: Whether a question is blocked by the previous question.
+
+=== 3.1 ===
+
+* thquiz_attempt::question_print_comment_fields() has been removed. It was broken
+  since at least Moodle 2.0.
+
+* thquiz::confirm_start_attempt_message and mod_thquiz_view_object::$startattemptwarning
+  have been deprecated. This functionality is now entirely handled within the
+  thquiz access rule plugins.
+
+* The third argument to mod_thquiz_renderer::start_attempt_button has been changed
+  from a warning string to a mod_thquiz_preflight_check_form.
+
+* mod_thquiz_renderer::review_next_navigation has a new optional argument. If you
+  have overridden that method, consider updating your code to match.
+
+* mod_thquiz\output\edit_renderer::start_section_list now takes $structure as an
+  argument. If you have overridden this method (it's hard to believe anyone ever
+  would) you will need to update your renderer.
+
+* Several methods relating to preview links/buttons/urls have a new optional
+  argument to make the preview be of a particular variant.
+
+
+=== 2.9 ===
+
+* There have been changes in classes/output/edit_renderer.php for MDL-40990.
+  + Some methods use to take $structure & $question as the first two arguments.
+    They now take $structure & $slot number. If you need $question, you can get
+    it using $question = $structure->get_question_in_slot($slot);
+  + Some methods used to take $thquiz & $question. They now take $structure & $slot
+    number. You can get $question as above. $thquiz is $structure->get_thquiz().
+  + initialise_editing_javascript has had some redundant arguments removed.
+  Hopefully, with these changes, we will have less need to make other changes in future.
+
+* Due to MDL-40992, you should be aware that extra slots can get added to an attempt.
+  You may get slot numbers beyone the end of the original thquiz layout, and you
+  may want to call $attemptobj->get_original_slot to find where the question
+  originally came from.
+
+* You now need to pass an instance of the mod_thquiz_renderer if you call
+  $attemptobj->render_question or $attemptobj->render_question_at_step.
+
+* The array values in mod_thquiz_links_to_other_attempts may now be either a moodle_url,
+  or renderable (or null). Previously they could only be a moodle_url or null.
+
+* The contents of the navigation block is now not just thquiz_nav_question_button-s.
+  It can also contain thquiz_nav_section_heading-s. If you have overridden
+  mod_thquiz_renderer::navigation_panel, then you may need to account for this.
+  This change also has implications for the Edit thquiz page.
+
+
+=== 2.8 ===
+
+* Classes that were defined in various lib files have been moved to the classes
+  folder to take advantage of auto-loading. This has involved renaming them.
+  see the list in mod/thquiz/db/renamedclasses.php.
+
+* The thquiz no longer handles its own \mod_thquiz\event\attempt_becameoverdue event,
+  and so the event handler function thquiz_attempt_overdue_handler has been deleted.
+  Also, the internal function thquiz_send_overdue_message has add the arguments
+  changed. It now takes the $attemptobj object, not separate stdClass objects.
+
+* Major changes to the Edit thquiz page.
+
+  The goal of this work was to increase usability, and also clean up the page
+  enough that it will be possible to add new features in future.
+
+  Display of mod/thquiz/edit.php is now entirely generated by
+  mod_thquiz\output\edit_renderer. This uses a helper class mod_thquiz\structure
+  to provide details of the structure of the thquiz, and mod_thquiz\repaginate to
+  alter that structure. (Actually, there are still some modification methods on
+  mod_thquiz\structure. Expect that to be cleaned up in future.)
+
+  The new code uses much more ajax, and there are new scripts mod/thquiz/edit_rest.php
+  and mod/thquiz/repaginate.php to handle this. (Again, don't be surprised if those
+  two scripts get merged in future.) Also questionbank.ajax.php (which may, in
+  future, be made more generic, and moved into the core question bank code.)
+
+  As a result of this, mod/thquiz/editlib.php has gone. (A few remaining functions
+  were moved to locallib.php.)
+
+  Here is a list of all the old functions or classes that have changed.
+  If you used any of these in custom code, you will need to update your code.
+  (Note that many of these functions should have been considered private internals
+  of the thquiz module, and you should not have been using them!)
+
+  From editlib.php:
+      thquiz_remove_slot
+      thquiz_delete_empty_page
+      thquiz_add_page_break_after_slot    - Use methods of structure or repaginate
+      thquiz_update_slot_maxmark          - classes instead.
+      _thquiz_move_question
+      thquiz_move_question_up
+      thquiz_move_question_down
+
+      thquiz_print_question_list
+      thquiz_print_pagecontrols
+      thquiz_print_singlequestion         - Use methods of edit_renderer instead.
+      thquiz_print_randomquestion
+      thquiz_print_singlequestion_reordertool
+      thquiz_print_randomquestion_reordertool
+      print_random_option_icon
+      thquiz_print_grading_form
+      thquiz_print_status_bar
+
+  Moved from editlib.php to locallib.php:
+      thquiz_question_tostring - now always returns a string (the only option used).
+                               The $return argument has gone.
+
+  Old editing JavaScript (e.g. mod/thquiz/edit.js) is gone. Replaced with YUI modules.
+
+
+=== 2.7.1 ===
+
+* The function thquiz_fire_attempt_started_event has been removed. This function
+  should not have been used outside the thquiz, but if you were using it, you should
+  trigger the event outside this function. Note that the appropriate start event is
+  fired automatically by the thquiz_attempt_save_started function.
+
+
+=== 2.7 ===
+
+* The old thquiz.questions database column (comma-separated list of question ids)
+  is gone, and instead the thquiz_question_instances table has been renamed to
+  to thquiz_slots. Some of the columns of that table have been renamed to match
+  the coding guidelines. Specifically:
+      thquiz     -> thquizid
+      question -> questionid
+      grade    -> maxmark
+  also there are two new columns:
+      slot     -  numbers the questions in the thquiz in order, as on the edit thquiz page.
+      page     -  new way to determine which question is on which page.
+  naturally, other parts of the code and APIs have been updated to reflect that
+  change.
+
+* The following functions, which were part of the internal workings of the thquiz,
+  have been removed.
+      thquiz_get_slot_for_question
+      thquiz_number_of_questions_in_thquiz
+      thquiz_repaginate               (there is now a thquiz_repaginate_questions with a different API).
+      thquiz_add_page_break_at        (see thquiz_add_page_break_after_slot)
+      thquiz_add_page_break_after     (see thquiz_add_page_break_after_slot)
+      thquiz_number_of_pages
+      thquiz_remove_question          (see thquiz_remove_slot)
+      thquiz_update_question_instance (see thquiz_update_slot_maxmark)
+
+* The following internal functions have had their API changed.
+      thquiz_delete_empty_page: has had its arguments changed to $thquiz and $pagenumber.
+      thquiz_has_question_use: now takes $thquiz and $slot, not $questionid.
+
+
+=== 2.6 ===
+
+* As part of improving the page usability and accessibility, we updated the
+  heading levels for thquiz module so it has a proper nesting. (MDL-41615)
+
+* mod_thquiz_renderer::view_best_score has been removed. (It did not do what the
+  name suggested anyway.)
+
+
+=== 2.4 ===
+
+* mod_thquiz_renderer::finish_review_link now requires $attemptobj to be passed in
+  instead of a moodle_url.
+
+
+=== Earlier changes ===
+
+* Were not documented in this way. Sorry.

@@ -1,0 +1,173 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_courseformat/local/content/cm/activity_info
+
+    Container to display activity information on the course page such as:
+      - Activity completion requirements (automatic completion)
+      - Manual completion button
+
+    Example context (json):
+    {
+        "activityname": "Course announcements",
+        "hascompletion": true,
+        "uservisible": true,
+        "isautomatic": true,
+        "showmanualcompletion": true,
+        "completiondetails": [
+             {
+                "statuscomplete": 1,
+                "description": "Viewed"
+            },
+            {
+                "statusincomplete": 1,
+                "description": "Receive a grade"
+            }
+        ]
+    }
+}}
+
+
+{{!
+    @template core_courseformat/local/content/cm/activity_info
+
+    Container to display activity information on the course page.
+}}
+<div data-region="activity-information" data-activityname="{{activityname}}" class="activity-information">
+    {{#hascompletion}}
+        {{#uservisible}}
+            <div data-region="completion-info">
+                {{#isautomatic}}
+                {{#showmanualcompletion}}
+                <div class="automatic-completion-wrapper">
+                    <button type="button" class="btn btn-sm btn-outline-secondary completion-toggle">
+                      Todo <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="automatic-completion-conditions completion-dropdown" data-region="completionrequirements"
+                         role="list"
+                         aria-label="{{#str}}completionrequirements, core_course, {{activityname}}{{/str}}"
+                         style="display: none;">
+                        {{#completiondetails}}
+                            {{$ core_course/completion_automatic }}
+                                {{> core_course/completion_automatic }}
+                            {{/ core_course/completion_automatic }}
+                        {{/completiondetails}}
+                    </div>
+                </div>
+                {{/showmanualcompletion}}
+                {{/isautomatic}}
+
+                {{^isautomatic}}
+                    {{#showmanualcompletion}}
+                        {{$ core_course/completion_manual }}
+                            {{> core_course/completion_manual }}
+                        {{/ core_course/completion_manual }}
+                    {{/showmanualcompletion}}
+                {{/isautomatic}}
+            </div>
+        {{/uservisible}}
+    {{/hascompletion}}
+</div>
+
+{{#js}}
+require(['jquery', 'core/str'], function($, str) {
+    str.get_strings([
+        {key: 'completion_done', component: 'theme_th_lambda_st'},
+        {key: 'completion_todo', component: 'theme_th_lambda_st'}
+    ]).done(function(strings) {
+        const doneLabel = strings[0];
+        const todoLabel = strings[1];
+
+        $(document).ready(function() {
+            $('.completion-toggle').each(function(index) {
+                const $button = $(this);
+                const $dropdown = $button.next('.completion-dropdown');
+
+                // Gán ID để xác định đúng dropdown khi click
+                const dropdownId = 'completion-dropdown-' + index;
+                $button.attr('data-dropdown-id', dropdownId);
+                $dropdown.attr('id', dropdownId);
+
+                // Di chuyển dropdown ra body để tránh bị che bởi overflow
+                $dropdown.appendTo('body').hide();
+
+                setTimeout(function() {
+                    $('.completion-toggle').each(function() {
+                        const $button = $(this);
+                        const dropdownId = $button.data('dropdown-id');
+                        const $dropdown = $('#' + dropdownId);
+
+                        const $items = $dropdown.find('[role="listitem"]');
+                        const $completed = $items.filter('.alert-success');
+
+                        if ($items.length > 0 && $items.length === $completed.length) {
+                            $button.html(doneLabel + ' <i class="fa fa-angle-down" aria-hidden="true"></i>')
+                                   .removeClass('btn-outline-secondary')
+                                   .addClass('btn-success');
+                        } else {
+                            $button.html(todoLabel + ' <i class="fa fa-angle-down" aria-hidden="true"></i>');
+                        }
+                    });
+                }, 100);
+            });
+
+            // Xử lý click toggle
+            $('.completion-toggle').off('click').on('click', function(e) {
+                e.stopPropagation();
+
+                const $button = $(this);
+                const dropdownId = $button.data('dropdown-id');
+                const $dropdown = $('#' + dropdownId);
+
+                // Đóng các dropdown khác
+                $('.completion-dropdown').not($dropdown).hide();
+
+                // Toggle dropdown này
+                if ($dropdown.is(':visible')) {
+                    $dropdown.hide();
+                } else {
+                    const offset = $button.offset();
+                    $dropdown.css({
+                        top: offset.top + $button.outerHeight(),
+                        left: offset.left - $dropdown.outerWidth() + $button.outerWidth(),
+                        position: 'absolute',
+                        zIndex: 9999,
+                    }).show();
+                }
+            });
+
+            // Click bên ngoài thì ẩn dropdown
+            $(document).on('mousedown', function(e) {
+                if (!$(e.target).closest('.completion-dropdown').length &&
+                    !$(e.target).closest('.completion-toggle').length) {
+                    $('.completion-dropdown').hide();
+                }
+            });
+        });
+    });
+});
+{{/js}}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+{
+    "name": "moodle-mod_thquiz-modform",
+    "builds": {
+        "moodle-mod_thquiz-modform": {
+            "jsfiles": [
+                "modform.js"
+            ]
+        }
+    }
+}

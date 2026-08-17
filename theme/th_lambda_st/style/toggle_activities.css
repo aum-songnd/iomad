@@ -1,0 +1,104 @@
+.single-section .hidden-activity {
+    display: none !important;
+}
+
+/* ===== H5 ===== */
+li.activity.level-h5 {
+    margin-left: 0;
+    padding: 14px 16px !important;
+    background: #f8f9fb;
+    border-left: 5px solid #f9a825;
+    border-radius: 6px;
+    margin-bottom: 12px !important;
+}
+
+li.activity.level-activity.h5-child {
+    margin-left: 20px;
+    position: relative;
+}
+
+/* ===== H6 ===== */
+li.activity.level-h6 {
+    margin-left: 32px;
+    padding: 12px 16px !important;
+    background: #ffffff;
+    border-left: 4px solid #90caf9;
+    border-radius: 6px;
+    margin-bottom: 8px !important;
+    position: relative;
+}
+
+li.activity.level-activity.h6-child {
+    margin-left: 64px;
+    padding-left: 16px;
+    position: relative;
+}
+
+li.activity.level-activity {
+    margin-left: 64px;
+    padding: 10px 0;
+    position: relative;
+}
+
+/* ===== ACTIVITY ===== */
+/* ===== hover nhẹ ===== */
+li.activity.level-h5:hover,
+li.activity.level-h6:hover {
+    background: #f1f1f1;
+}
+
+.label-toggle {
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.label-toggle:hover {
+    background: #f1f3f6;
+}
+
+/* Ẩn/hiện mượt */
+.hidden-activity { display: none !important; }
+
+/* Label toggle layout */
+li.activity.label-toggle h5,
+li.activity.label-toggle h6 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Icon mũi tên */
+.th-toggle-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  opacity: .85;
+  transform: rotate(0deg);
+  transition: transform .2s ease, background-color .2s ease, opacity .2s ease;
+}
+
+li.activity.label-toggle:hover .th-toggle-arrow {
+  background: rgba(0,0,0,.06);
+  opacity: 1;
+}
+
+/* Xoay khi mở */
+li.activity.label-toggle.is-expanded .th-toggle-arrow {
+  transform: rotate(90deg);
+}
+
+/* (Tuỳ chọn) làm label nhìn giống “accordion” */
+li.activity.label-toggle.level-h5,
+li.activity.label-toggle.level-h6 {
+  border-radius: 10px;
+  padding: 6px 8px;
+}
+
+li.activity.label-toggle.level-h5:hover,
+li.activity.label-toggle.level-h6:hover {
+  background: rgba(0,0,0,.03);
+}
+

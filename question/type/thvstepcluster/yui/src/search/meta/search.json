@@ -1,0 +1,8 @@
+{
+    "moodle-qtype_thvstepcluster-search": {
+        "requires": [
+            "base",
+            "node"
+        ]
+    }
+}

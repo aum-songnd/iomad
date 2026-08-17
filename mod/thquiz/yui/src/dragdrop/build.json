@@ -1,0 +1,12 @@
+{
+    "name": "moodle-mod_thquiz-dragdrop",
+    "builds": {
+        "moodle-mod_thquiz-dragdrop": {
+            "jsfiles": [
+                "dragdrop.js",
+                "section.js",
+                "resource.js"
+            ]
+        }
+    }
+}

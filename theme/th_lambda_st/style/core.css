@@ -1,0 +1,114 @@
+.th-my-custom-class {
+    display: none;
+    disabled: true;
+}
+#page-logins-index #region-main .login-languagemenu {
+  background-color: [[setting:def_buttoncolor]];
+  border: none;
+  border-radius: 2px;
+  text-shadow: none;
+  padding: 6px 18px;
+  box-shadow: 0 -1px 0 rgb(0 0 0 / 10%) inset;
+  font-size: 1.08em;
+}
+
+#page-logins-index #region-main .login-languagemenu a.dropdown-toggle {
+  color: #fff;
+  line-height: 25px;
+  margin: 0;
+}
+
+#page-logins-index #region-main .login-languagemenu a.dropdown-toggle .caret {
+  border-top-color: #fff;
+  margin-top: 10px;
+}
+
+#page-logins-index #region-main .login-languagemenu + .divider {
+  border: none !important;
+}
+#page-logins-index form#guestlogin, .login-instructions.mb-3, .login-signup {
+  text-align: center;
+}
+#page-logins-index:not(.login_lambda) #region-main {
+  max-width: 750px;
+  float: none;
+  margin: 2rem auto;
+}
+
+.path-logins.login_lambda #region-main {
+  padding: 1rem 2rem;
+}
+.path-logins .login-divider {
+  margin: 1rem 0;
+}
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+  font-family: Arial;
+  user-select: none;
+}
+
+/* .dropdown-display {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+} */
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 99;
+}
+
+.dropdown-list div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-list div:hover {
+  background-color: #f2f2f2;
+}
+
+select#th123 {
+  display: none; /* Ẩn select ban đầu */
+}
+
+button#sendotp {
+  display: block;
+  padding: 0.5rem 1rem;          /* padding mặc định */
+  line-height: 1.2;              /* kiểm soát chiều cao dòng */
+  white-space: nowrap;           /* giữ nội dung 1 dòng, tránh wrap */
+  min-height: 43px;              /* đảm bảo chiều cao tối thiểu */
+  max-height: 48px;              /* không cho cao quá */
+  overflow: hidden;              /* tránh tràn nội dung */
+  text-overflow: ellipsis;  
+  margin-bottom: 25px;
+}
+
+.path-logins input#email {
+    width: calc(100% - 120px);
+    line-height: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 25px;
+}
+
+.path-logins input#otp {
+    width: calc(100% - 12px);
+    line-height: 35px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    margin-bottom: 25px;
+}

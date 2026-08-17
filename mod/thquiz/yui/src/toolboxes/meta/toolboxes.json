@@ -1,0 +1,14 @@
+{
+    "moodle-mod_thquiz-toolboxes": {
+        "requires": [
+            "base",
+            "node",
+            "event",
+            "event-key",
+            "io",
+            "moodle-mod_thquiz-thquizbase",
+            "moodle-mod_thquiz-util-slot",
+            "moodle-core-notification-ajaxexception"
+        ]
+    }
+}

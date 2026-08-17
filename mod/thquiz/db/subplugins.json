@@ -1,0 +1,6 @@
+{
+    "plugintypes": {
+        "thquiz": "mod\/thquiz\/report",
+        "thquizaccess": "mod\/thquiz\/accessrule"
+    }
+}

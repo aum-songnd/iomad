@@ -1,0 +1,293 @@
+
+
+
+.th-my-custom-class {
+    display: none;
+    disabled: true;
+}
+div[data-fieldtype="autocomplete"] .form-autocomplete-suggestions {
+	position: relative !important;
+}
+
+.th-view-all-courses-btn a{
+    font-weight: bold !important;
+}
+
+.th_lambda_feedback_report .error-button {
+    position: fixed;
+    bottom: 1em;
+    right: 0.7%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 10000;
+    text-align: center;
+    top: initial !important;
+}
+
+.th_lambda_feedback_report .error-button .feedback_text{
+    color: #555;
+    font-size: 9px;
+    font-weight: 600;
+    margin-top: -8px;
+}
+
+.back-to-top {
+    bottom: 6em !important;  
+}
+
+.th_lambda_feedback_report .error-button i {
+    font-size: 40px;
+    color: red;
+}
+
+.th_lambda_feedback_report #errorFormContainer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+}
+
+.th_lambda_feedback_report #errorFormContainer #errorForm {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    max-height: 80%;
+    margin-top: 25px;
+}
+
+.th_lambda_feedback_report #errorFormContainer img {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.th_lambda_feedback_report #errorFormContainer textarea#issueDescription {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+.th_lambda_feedback_report #errorFormContainer button#closeButton {
+    color: #000;
+    font-size: 30px;
+    top: 0; 
+    right: 0; 
+    cursor: pointer;
+}
+
+.error_img {
+    height: 65%;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .th_lambda_feedback_report #errorFormContainer #errorForm {
+        max-height: 75%;
+    }
+}
+
+@media screen and (max-height: 844px) {
+    .error_img {
+        height: 45%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .feedback-category {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .feedback-category #supportType {
+        margin-right: 5px;
+    }
+}
+
+.feedback-category label {
+    margin-right: 5px;
+}
+
+#page-logins-index.column-2 .row.justify-content-center {
+    width: 50%;
+    position: relative;
+    float: left;
+    margin: 0 !important;
+}
+
+@media (max-width: 767px) {
+    #page-logins-index.column-2 .row.justify-content-center {width: 100%;}
+    .hidden-desktop {display: none;}
+}
+
+@media (min-width: 768px) {
+    #page-login-index .path-logins div[role="main"] {display: flex;}
+    #page-login-index .path-logins .row.justify-content-center {width: 46%; margin: 0 2% !important;}
+}
+#page-login-change_password.path-logins div[role="main"] {
+    display: block;
+}
+#page-login-change_password.path-logins div[role="main"] .alert {
+    margin-bottom: 1rem;
+}
+.path-logins form#login {
+    background: #eee none repeat scroll 0 0;
+    padding: 25px 25px 45px;
+    position: relative;
+    margin-top: 0 !important;
+}
+.path-logins .alert.alert-danger {
+    border-radius: 0;
+    border: none;
+    margin-bottom: 0;
+}
+.path-logins input[type="text"] {
+    width: calc(100% - 12px);
+    line-height: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-bottom: 25px;
+}
+.path-logins input#username, .path-logins input#password {
+    width: calc(100% - 12px);
+    line-height: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 25px;
+}
+.path-logins .rememberpass.mt-3 {
+    margin-top: 0 !important;
+}
+.path-logins button#loginbtn {
+    width: 100%;
+    margin: 25px 0 0 0 !important;
+    line-height: 25px;
+}
+.path-logins button.btn.btn-secondary.btn-block {
+    margin: 0 auto;
+    width: auto;
+    line-height: 25px;
+}
+.path-logins .forgetpass.mt-3 {
+    margin-top: 0 !important;
+    background: #dddddd;
+    padding: 10px 25px;
+}
+.path-logins .forgetpass.mt-3 > p {
+    margin-bottom: 0;
+}
+.path-logins .card-header.text-center {
+    padding: 0;
+    background: transparent;
+    border: none;
+    margin: 0 0 20px;
+}
+.path-logins .card-body .card-title h2 {
+    text-align: center;
+    margin: 0 0 20px;
+}
+.path-logins .card-block {
+    padding: 0;
+}
+.path-logins #region-main .card {
+    padding: 1.25rem;
+    background: transparent;
+    border: none;
+}
+@media (max-width: 384px) {
+    .path-logins .card {padding: 1.25rem 5px;}
+}
+.path-logins #signup {
+    text-align: center;
+}
+@media (max-width: 384px) {
+    .path-logins .logo {margin-top: 15px;}
+}
+.path-logins.login_lambda.column-1 div#page {
+    max-width: 600px;
+}
+.path-logins.login_lambda.column-1 div#page {
+    max-width: 600px;
+}
+@media (min-width: 768px) {
+    .path-logins.column-1 .row.justify-content-center {max-width: 600px; margin: 0 auto !important;}
+}
+.path-logins.login_lambda.column-1 .row.justify-content-center {
+    width: 96%;
+    margin: 0 2%!important;
+}
+.path-logins.login_lambda .logo-header {
+    text-align: center;
+}
+
+.path-logins #region-main .login-languagemenu {
+  background-color: #8ec63f;
+  border: none;
+  border-radius: 2px;
+  text-shadow: none;
+  padding: 6px 18px;
+  box-shadow: 0 -1px 0 rgb(0 0 0 / 10%) inset;
+  font-size: 1.08em;
+}
+
+.path-logins #region-main .login-languagemenu a.dropdown-toggle {
+  color: #fff;
+  line-height: 25px;
+  margin: 0;
+  margin-top: 0px;
+}
+
+.path-logins #region-main .login-languagemenu a.dropdown-toggle .caret {
+  border-top-color: #fff;
+  margin-top: 10px;
+}
+
+/*DRAG DROP overflow*/
+.que.ddwtos .drop {
+    width: auto !important;
+    min-width: 200px !important; 
+    white-space: normal !important;
+}
+
+.que.ddwtos .draghome {
+    min-width: 320px !important;
+    white-space: normal !important;
+}
+
+.que.ddwtos .placed {
+    width: inherit !important;
+}
+
+/*TH DRAG DROP overflow*/
+.que.thddwtos .drop {
+    width: auto !important;
+    min-width: 200px !important; 
+    white-space: normal !important;
+}
+
+.que.thddwtos .draghome {
+    min-width: 320px !important;
+    white-space: normal !important;
+}
+
+.que.thddwtos .placed {
+    width: inherit !important;
+}

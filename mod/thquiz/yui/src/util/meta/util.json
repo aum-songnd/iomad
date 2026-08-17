@@ -1,0 +1,26 @@
+{
+  "moodle-mod_thquiz-util": {
+    "requires": [
+        "node", "moodle-core-actionmenu"
+    ],
+    "use": [
+        "moodle-mod_thquiz-util-base"
+    ],
+    "submodules": {
+        "moodle-mod_thquiz-util-base": {
+        },
+        "moodle-mod_thquiz-util-slot": {
+            "requires": [
+                "node",
+                "moodle-mod_thquiz-util-base"
+            ]
+        },
+        "moodle-mod_thquiz-util-page": {
+            "requires": [
+                "node",
+                "moodle-mod_thquiz-util-base"
+            ]
+        }
+    }
+  }
+}

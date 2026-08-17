@@ -1,0 +1,11 @@
+form[data-qtype='thvstepcluster'] #fitem_id_question_entry_items ul.form-autocomplete-suggestions{
+	position: relative ;
+}
+
+.form-inline .form-control {
+	height: auto;
+}
+
+input#id_defaultmark {
+	height: auto;
+}

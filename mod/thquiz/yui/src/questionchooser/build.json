@@ -1,0 +1,10 @@
+{
+    "name": "moodle-mod_thquiz-questionchooser",
+    "builds": {
+        "moodle-mod_thquiz-questionchooser": {
+            "jsfiles": [
+                "questionchooser.js"
+            ]
+        }
+    }
+}

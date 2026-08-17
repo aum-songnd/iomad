@@ -1,0 +1,1 @@
+YUI.add("moodle-mod_thquiz-util-base",function(o,d){o.namespace("Moodle.mod_thquiz.util")},"@VERSION@");
