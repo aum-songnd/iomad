@@ -164,9 +164,6 @@ if ($hassiteconfig) {
     $temp->add(new admin_setting_configtext('mobilecssurl', new lang_string('mobilecssurl', 'tool_mobile'),
                 new lang_string('configmobilecssurl', 'tool_mobile'), '', PARAM_URL));
 
-    // $temp->add(new admin_setting_configtextarea('mobilecsscontent', new lang_string('mobilecsscontent', 'tool_mobile'),
-    //         new lang_string('configmobilecsscontent', 'tool_mobile'), '', PARAM_RAW, '50', '15'));
-
     // Reference to Branded Mobile App.
     if (empty($CFG->disableserviceads_branded)) {
         $temp->add(new admin_setting_description('moodlebrandedappreference',
