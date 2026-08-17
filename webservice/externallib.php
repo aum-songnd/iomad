@@ -165,7 +165,7 @@ class core_webservice_external extends external_api {
 
         // Mobile CSS theme and alternative login url.
         $siteinfo['mobilecssurl'] = !empty($CFG->mobilecssurl) ? $CFG->mobilecssurl : '';
-        $siteinfo['mobilecsscontent'] = !empty($CFG->mobilecsscontent) ? $CFG->mobilecsscontent : '';
+        // $siteinfo['mobilecsscontent'] = !empty($CFG->mobilecsscontent) ? $CFG->mobilecsscontent : '';
 
         // Retrieve some advanced features. Only enable/disable ones (bool).
         $advancedfeatures = array("usecomments", "usetags", "enablenotes", "messaging", "enableblogs",
@@ -262,7 +262,7 @@ class core_webservice_external extends external_api {
                 'release'  => new external_value(PARAM_TEXT, 'Moodle release number', VALUE_OPTIONAL),
                 'version'  => new external_value(PARAM_TEXT, 'Moodle version number', VALUE_OPTIONAL),
                 'mobilecssurl'  => new external_value(PARAM_URL, 'Mobile custom CSS theme', VALUE_OPTIONAL),
-                'mobilecsscontent' => new external_value(PARAM_RAW, 'Mobile custom CSS content', VALUE_OPTIONAL),
+                // 'mobilecsscontent' => new external_value(PARAM_RAW, 'Mobile custom CSS content', VALUE_OPTIONAL),
                 'advancedfeatures' => new external_multiple_structure(
                     new external_single_structure(
                         array(

@@ -192,7 +192,7 @@ class api {
             'maintenanceenabled' => $CFG->maintenance_enabled,
             'maintenancemessage' => $maintenancemessage,
             // 'mobilecssurl' => !empty($CFG->mobilecssurl) ? $CFG->mobilecssurl : '',
-            'mobilecsscontent' => !empty($CFG->mobilecsscontent) ? $CFG->mobilecsscontent : '',
+            // 'mobilecsscontent' => !empty($CFG->mobilecsscontent) ? $CFG->mobilecsscontent : '',
             'tool_mobile_disabledfeatures' => get_config('tool_mobile', 'disabledfeatures'),
             'country' => clean_param($CFG->country, PARAM_NOTAGS),
             'agedigitalconsentverification' => \core_auth\digital_consent::is_age_digital_consent_verification_enabled(),

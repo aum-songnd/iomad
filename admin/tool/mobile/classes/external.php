@@ -156,7 +156,7 @@ class external extends external_api {
                 'typeoflogin' => new external_value(PARAM_INT, 'The type of login. 1 for app, 2 for browser, 3 for embedded.'),
                 'launchurl' => new external_value(PARAM_URL, 'SSO login launch URL.', VALUE_OPTIONAL),
                 // 'mobilecssurl' => new external_value(PARAM_URL, 'Mobile custom CSS theme', VALUE_OPTIONAL),
-                'mobilecsscontent' => new external_value(PARAM_RAW, 'Mobile custom CSS content', VALUE_OPTIONAL),
+                // 'mobilecsscontent' => new external_value(PARAM_RAW, 'Mobile custom CSS content', VALUE_OPTIONAL),
                 'tool_mobile_disabledfeatures' => new external_value(PARAM_RAW, 'Disabled features in the app', VALUE_OPTIONAL),
                 'identityproviders' => new external_multiple_structure(
                     new external_single_structure(
