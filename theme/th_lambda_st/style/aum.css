@@ -29,7 +29,7 @@ ion-segment ion-segment-button:not(.segment-button-checked):hover::part(native) 
 }
 
 ion-segment ion-segment-button.segment-button-checked:hover::part(native) {
-    background: #F5821F !important;
+    background: blue !important;
 }
 
 /***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT ĐIỀU HƯỚNG  *****************************************/
