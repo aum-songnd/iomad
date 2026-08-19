@@ -18,8 +18,8 @@ ion-segment ion-segment-button::part(native) {
 }
 
 ion-segment ion-segment-button.segment-button-checked::part(native) {
-    background: #F5821F !important;
-    border: 1px solid #F5821F !important;
+    background: red !important;
+    border: 1px solid red !important;
     color: #ffffff;
 }
 
@@ -36,7 +36,7 @@ ion-segment ion-segment-button.segment-button-checked:hover::part(native) {
 
 /***************************************** ĐỔI MÀU NÚT LƯU Ý *****************************************/
 html body .alert-button-group.sc-ion-alert-md button.sc-ion-alert-md {
-    background: #F5821F !important;
+    background: red !important;
 }
 
 html body .alert-button-group.sc-ion-alert-md button.sc-ion-alert-md span.alert-button-inner.sc-ion-alert-md {
@@ -45,16 +45,16 @@ html body .alert-button-group.sc-ion-alert-md button.sc-ion-alert-md span.alert-
 
 html body .alert-button-group.sc-ion-alert-md button.alert-button-role-cancel.sc-ion-alert-md {
     background: #ffffff !important;
-    border: 1px solid #F5821F !important;
+    border: 1px solid red !important;
 }
 
 html body .alert-button-group.sc-ion-alert-md button.alert-button-role-cancel.sc-ion-alert-md span.alert-button-inner.sc-ion-alert-md {
-    color: #F5821F !important;
+    color: red !important;
 }
 
 /* IOS mode */
 html body .alert-button-group.sc-ion-alert-ios button.sc-ion-alert-ios {
-    background: #F5821F !important;
+    background: red !important;
 }
 
 html body .alert-button-group.sc-ion-alert-ios button.sc-ion-alert-ios span.alert-button-inner.sc-ion-alert-ios {
@@ -63,11 +63,11 @@ html body .alert-button-group.sc-ion-alert-ios button.sc-ion-alert-ios span.aler
 
 html body .alert-button-group.sc-ion-alert-ios button.alert-button-role-cancel.sc-ion-alert-ios {
     background: #ffffff !important;
-    border: 1px solid #F5821F !important;
+    border: 1px solid red !important;
 }
 
 html body .alert-button-group.sc-ion-alert-ios button.alert-button-role-cancel.sc-ion-alert-ios span.alert-button-inner.sc-ion-alert-ios {
-    color: #F5821F !important;
+    color: red !important;
 }
 /***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT LƯU Ý  *****************************************/
 
@@ -75,24 +75,24 @@ html body .alert-button-group.sc-ion-alert-ios button.alert-button-role-cancel.s
 /***************************************** ĐỔI MÀU NÚT NỘP BÀI, BẮT ĐẦU, ... *****************************************/
 
 ion-button.button.button-solid {
-    --background: #F5821F !important;
+    --background: red !important;
     --color: #ffffff;
 }
 
 ion-button.button-outline {
-    --border-color: #F5821F !important;
-    --color: #F5821F !important;
+    --border-color: red !important;
+    --color: red !important;
 }
 /***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT NỘP BÀI, BẮT ĐẦU, ... *****************************************/
 
 
 /***************************************** ĐỔI MÀU ICON TAB BAR *****************************************/
 ion-tab-bar {
-    --background: #1D1F42 !important;
+    --background: green !important;
 }
 
 ion-tabs.placement-bottom ion-tab-button.tab-selected ion-icon.core-tab-icon {
-    color: #F5821F !important;
+    color: red !important;
 }
 
 ion-tabs.placement-bottom ion-tab-button ion-icon.core-tab-icon {
@@ -103,7 +103,7 @@ ion-tabs.placement-bottom ion-tab-button ion-icon.core-tab-icon {
 
 
 ion-tabs.placement-side ion-tab-bar ion-tab-button.tab-selected ion-icon.core-tab-icon {
-    color: #F5821F !important;
+    color: red !important;
 }
 
 ion-tabs.placement-side ion-tab-bar ion-tab-button ion-icon.core-tab-icon {

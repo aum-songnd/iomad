@@ -1634,7 +1634,7 @@ class local_th_bundleassign_api_external extends external_api {
 
     public static function brand($id = 0) {
         global $DB, $CFG;
-        
+
         $result = array(
             'status' => '',
             'company' => [
@@ -1643,7 +1643,8 @@ class local_th_bundleassign_api_external extends external_api {
                 'url'  => '',
                 'logo'  => '',
                 'color' => '',
-                'primary_shade' => ''
+                'primary_shade' => '',
+                'css_url' => '',
             ]
         );
 
@@ -1654,14 +1655,14 @@ class local_th_bundleassign_api_external extends external_api {
 
         $sql = "SELECT * FROM {company_users} WHERE userid = :userid";
         $usercompany = $DB->get_record_sql($sql, ['userid' => $id]);
-        
+
         if(!$usercompany) {
             $result['status'] = 'The user does not belong to any company';
             return $result;
         }
-        
+
         $companyid = $usercompany->companyid;
-                // Get company info
+        // Get company info
         $companyrecord = $DB->get_record('company', ['id' => $companyid], 'id, name, shortname');
         if ($companyrecord) {
             $result['company']['name'] = $companyrecord->name;
@@ -1669,12 +1670,18 @@ class local_th_bundleassign_api_external extends external_api {
         }
         $company = new company($companyid);
         $hostname = $company->get_wwwroot();
-        $result['company']['url'] = $hostname ? $hostname : '';
+        // get_wwwroot() có thể trả về đối tượng URL (moodle_url / \core\url)
+        // tuỳ phiên bản Moodle/IOMAD, chứ không phải luôn là string.
+        if (is_object($hostname)) {
+            $hostname = method_exists($hostname, 'out') ? $hostname->out(false) : (string) $hostname;
+        }
+        $hostname = $hostname ? (string) $hostname : '';
+        $result['company']['url'] = $hostname;
         // Get theme colors config
         $th_config = get_config('theme_th_lambda_st');
         $syscontext = context_system::instance();
         $themerev = theme_get_revision();
-        
+
         // Get company logos from system context (core_admin, filearea = logo{companyid})
         $logocompact = get_config('core_admin', 'logocompact' . $companyid);
         if (!empty($logocompact)) {
@@ -1698,7 +1705,7 @@ class local_th_bundleassign_api_external extends external_api {
 
             $result['company']['logo'] = $logourl->out(false);
         }
-        
+
         $config_key = 'maincolor' . $companyid;
         if (!empty($th_config->$config_key)) {
             $result['company']['color'] = $th_config->$config_key;
@@ -1707,6 +1714,36 @@ class local_th_bundleassign_api_external extends external_api {
         $config_key = 'text_mobile_color' . $companyid;
         if (!empty($th_config->$config_key)) {
             $result['company']['primary_shade'] = $th_config->$config_key;
+        }
+
+        // URL file CSS tuỳ biến cho mobile app (đã được local_mobilecssedit
+        // cho phép chỉnh sửa trực tiếp nội dung file trỏ tới bởi URL này).
+        $config_key = 'mobilecssurl' . $companyid;
+        if (!empty($th_config->$config_key)) {
+            $cssurl = trim($th_config->$config_key);
+
+            if (!preg_match('#^https?://#i', $cssurl)) {
+                $base = $hostname ? rtrim($hostname, '/') : rtrim($CFG->wwwroot, '/');
+                $cssurl = $base . '/' . ltrim($cssurl, '/');
+            }
+
+            // Cache-bust theo thời điểm sửa file thật (không đổi liên tục như time()).
+            $cssfilepath = null;
+            $parsedpath = parse_url($cssurl, PHP_URL_PATH);
+            if ($parsedpath) {
+                $relative = preg_replace('#^.*?/theme/#', '/theme/', $parsedpath);
+                if ($relative) {
+                    $candidate = $CFG->dirroot . $relative;
+                    if (is_file($candidate)) {
+                        $cssfilepath = $candidate;
+                    }
+                }
+            }
+
+            $version = $cssfilepath ? filemtime($cssfilepath) : $themerev;
+            $cssurl .= (strpos($cssurl, '?') === false ? '?' : '&') . 'v=' . $version;
+
+            $result['company']['css_url'] = $cssurl;
         }
 
         $result['status'] = 'success!';
@@ -1723,6 +1760,7 @@ class local_th_bundleassign_api_external extends external_api {
                 'logo' => new external_value(PARAM_TEXT, 'Logo URL'),
                 'color' => new external_value(PARAM_TEXT, 'Main theme color'),
                 'primary_shade' => new external_value(PARAM_TEXT, 'Text color for mobile applications'),
+                'css_url' => new external_value(PARAM_TEXT, 'Custom mobile CSS file URL', VALUE_OPTIONAL),
             ])
         ]);
     }

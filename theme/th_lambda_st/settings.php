@@ -55,6 +55,18 @@ if (!empty($SESSION->currenteditingcompany)) {
             $temp->add($setting);
         }
     }
+
+    // Helper function to add a company-specific text/URL setting (e.g. custom mobile CSS URL).
+    if (!function_exists('th_lambda_st_add_company_text')) {
+        function th_lambda_st_add_company_text($temp, $name, $title, $description, $default, $companyid,
+                $companytext, $paramtype = PARAM_RAW) {
+            $company_name = $name . $companyid;
+            $company_setting_name = 'theme_th_lambda_st/' . $company_name;
+            $company_title = $title . $companytext;
+            $setting = new admin_setting_configtext($company_setting_name, $company_title, $description, $default, $paramtype);
+            $temp->add($setting);
+        }
+    }
     
     // Main theme color
     th_lambda_st_add_company_color($temp_company, 'maincolor',
@@ -157,6 +169,11 @@ if (!empty($SESSION->currenteditingcompany)) {
         get_string('text_mobile_color', 'theme_th_lambda_st'),
         get_string('text_mobile_color_desc', 'theme_th_lambda_st'),
         '', $companyid, $companytext);
-    
+
+    th_lambda_st_add_company_text($temp_company, 'mobilecssurl',
+        get_string('mobilecssurl', 'theme_th_lambda_st'),
+        get_string('mobilecssurl_desc', 'theme_th_lambda_st'),
+        '', $companyid, $companytext, PARAM_URL);
+
     $ADMIN->add('theme_th_lambda_st', $temp_company);
 }

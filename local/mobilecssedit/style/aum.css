@@ -1,0 +1,112 @@
+/***************************************** ĐỔI MÀU CÁC NÚT ĐIỀU HƯỚNG  *****************************************/
+
+ion-segment {
+    --background: transparent;
+
+}
+
+ion-segment ion-segment-button {
+    --color: #000000;
+    --color-checked: #ffffff;
+}
+
+
+ion-segment ion-segment-button::part(native) {
+    background: #ffffff;
+    color: #000000;
+
+}
+
+ion-segment ion-segment-button.segment-button-checked::part(native) {
+    background: #F5821F !important;
+    border: 1px solid #F5821F !important;
+    color: #ffffff;
+}
+
+
+ion-segment ion-segment-button:not(.segment-button-checked):hover::part(native) {
+    background: #f5f5f5;
+}
+
+ion-segment ion-segment-button.segment-button-checked:hover::part(native) {
+    background: red !important;
+}
+
+/***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT ĐIỀU HƯỚNG  *****************************************/
+
+/***************************************** ĐỔI MÀU NÚT LƯU Ý *****************************************/
+html body .alert-button-group.sc-ion-alert-md button.sc-ion-alert-md {
+    background: #F5821F !important;
+}
+
+html body .alert-button-group.sc-ion-alert-md button.sc-ion-alert-md span.alert-button-inner.sc-ion-alert-md {
+    color: #ffffff !important;
+}
+
+html body .alert-button-group.sc-ion-alert-md button.alert-button-role-cancel.sc-ion-alert-md {
+    background: #ffffff !important;
+    border: 1px solid #F5821F !important;
+}
+
+html body .alert-button-group.sc-ion-alert-md button.alert-button-role-cancel.sc-ion-alert-md span.alert-button-inner.sc-ion-alert-md {
+    color: #F5821F !important;
+}
+
+/* IOS mode */
+html body .alert-button-group.sc-ion-alert-ios button.sc-ion-alert-ios {
+    background: #F5821F !important;
+}
+
+html body .alert-button-group.sc-ion-alert-ios button.sc-ion-alert-ios span.alert-button-inner.sc-ion-alert-ios {
+    color: #ffffff !important;
+}
+
+html body .alert-button-group.sc-ion-alert-ios button.alert-button-role-cancel.sc-ion-alert-ios {
+    background: #ffffff !important;
+    border: 1px solid #F5821F !important;
+}
+
+html body .alert-button-group.sc-ion-alert-ios button.alert-button-role-cancel.sc-ion-alert-ios span.alert-button-inner.sc-ion-alert-ios {
+    color: #F5821F !important;
+}
+/***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT LƯU Ý  *****************************************/
+
+
+/***************************************** ĐỔI MÀU NÚT NỘP BÀI, BẮT ĐẦU, ... *****************************************/
+
+ion-button.button.button-solid {
+    --background: #F5821F !important;
+    --color: #ffffff;
+}
+
+ion-button.button-outline {
+    --border-color: #F5821F !important;
+    --color: #F5821F !important;
+}
+/***************************************** KẾT THÚC ĐỔI MÀU CÁC NÚT NỘP BÀI, BẮT ĐẦU, ... *****************************************/
+
+
+/***************************************** ĐỔI MÀU ICON TAB BAR *****************************************/
+ion-tab-bar {
+    --background: #1D1F42 !important;
+}
+
+ion-tabs.placement-bottom ion-tab-button.tab-selected ion-icon.core-tab-icon {
+    color: #F5821F !important;
+}
+
+ion-tabs.placement-bottom ion-tab-button ion-icon.core-tab-icon {
+    color: #D7D7D7;
+
+}
+
+
+
+ion-tabs.placement-side ion-tab-bar ion-tab-button.tab-selected ion-icon.core-tab-icon {
+    color: #F5821F !important;
+}
+
+ion-tabs.placement-side ion-tab-bar ion-tab-button ion-icon.core-tab-icon {
+    color: #D7D7D7;
+}
+/***************************************** KẾT THÚC ĐỔI MÀU ICON TAB BAR *****************************************/

@@ -23,3 +23,7 @@ $string['grade_ielts'] = 'Điểm IELTS';
 $string['loginheading'] = 'Đăng nhập vào {$a}';
 $string['text_mobile_color'] = 'Màu chữ cho thiết bị di động';
 $string['text_mobile_color_desc'] = 'Đặt màu chữ cho ứng dụng mobile.';
+
+$string['mobilecssurl'] = 'Mobile App CSS URL';
+$string['mobilecssurl_desc'] = 'Nhập URL file CSS riêng dùng cho ứng dụng di động (Moodle App) của công ty này. '
+    . 'Nếu để trống, hệ thống sẽ dùng CSS mặc định (Site administration > Mobile app > Appearance).';
