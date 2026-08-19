@@ -8,6 +8,24 @@ $string['cssfilecontent']   = 'Nội dung file CSS (mobilecssurl)';
 $string['editingfile']      = 'Đang sửa file: {$a}';
 $string['description']      = 'Trình sửa CSS Mobile app (inline editor)';
 
+// Tính năng tự tạo file CSS mới.
+$string['createcssfile']       = 'Tạo file CSS mới';
+$string['createcssfile_desc']  = 'Nhập URL / đường dẫn của file CSS muốn tạo, hệ thống sẽ tự tạo file trên mã nguồn Moodle và lưu vào cấu hình mobilecssurl của company hiện tại.';
+$string['createcssfilehint']   = 'Ví dụ: /local/mobilecssedit/style/tencongty.css hoặc URL đầy đủ cùng domain với site. Chỉ chấp nhận file .css nằm trong mã nguồn Moodle. Để trống nếu chưa muốn tạo.';
+$string['urlrequired']         = 'Vui lòng nhập URL / đường dẫn file CSS cần tạo.';
+$string['invalidurl']          = 'URL không hợp lệ: phải là file .css, nằm trong mã nguồn Moodle (cùng domain với site hoặc đường dẫn tương đối), thư mục chứa file phải đã tồn tại và không được chứa "..".';
+$string['nocompany']           = 'Không xác định được company hiện đang chỉnh sửa nên không thể tạo file.';
+$string['dirnotwritable']      = 'Thư mục chứa file tồn tại nhưng webserver không có quyền ghi (kiểm tra quyền thư mục trên ổ đĩa).';
+$string['filecreated']         = 'Đã tạo file CSS mới thành công.';
+$string['filealreadyexists']   = 'File đã tồn tại sẵn - đã cập nhật cấu hình để trỏ tới file này (nội dung file không bị thay đổi).';
+$string['autocreatedcomment']  = 'File được tự động tạo bởi local_mobilecssedit';
+
+// Trang tổng quan danh sách company (managecss.php).
+$string['managecss']       = 'Quản lý file CSS Mobile app theo Company';
+$string['companyname']     = 'Tên Company';
+$string['cssfileexists']   = 'File đã tồn tại - không thể tạo lại, hãy vào trang cấu hình theme để sửa nội dung.';
+$string['nocompanies']     = 'Không có company nào để hiển thị.';
+
 // Thông báo trạng thái.
 $string['nolocalfile']      = 'Chưa cấu hình "Mobile custom CSS" (mobilecssurl), hoặc URL đó không trỏ tới file nằm trong mã nguồn Moodle nên không thể sửa trực tiếp tại đây.';
 $string['cannotwrite']      = 'Không xác định được file CSS cục bộ để ghi, hoặc file không tồn tại.';
