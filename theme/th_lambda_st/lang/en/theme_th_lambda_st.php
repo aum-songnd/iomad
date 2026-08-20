@@ -25,15 +25,6 @@ $string['text_mobile_color'] = 'Text color for mobile devices';
 $string['text_mobile_color_desc'] = 'Set the text color for mobile applications.';
 
 $string['mobilecssurl'] = 'Mobile App CSS URL';
-$string['mobilecssurl_desc'] = 'Nhập URL file CSS riêng dùng cho ứng dụng di động (Moodle App) của công ty này. '
+$string['mobilecssurl_desc'] = 'Cấu hình URL file CSS riêng dùng cho ứng dụng di động (Moodle App) của công ty này. '
     . 'Nếu để trống, hệ thống sẽ dùng CSS mặc định (Site administration > Mobile app > Appearance).';
  
-$string['mobilecssheading'] = 'Mobile App CSS';
-$string['cssfilecontent']    = 'Nội dung file CSS (Mobile App)';
-$string['cssfilecontent_desc'] = 'Xem và chỉnh sửa trực tiếp nội dung file CSS ứng với URL đã nhập ở trên. '
-    . 'Chỉ khả dụng khi URL trỏ tới 1 file nằm trong mã nguồn Moodle (cùng domain wwwroot hoặc đường dẫn tương đối).';
-$string['editingcssfile']    = 'Đang sửa file: {$a}';
-$string['nolocalcssfile']    = 'URL đã nhập không trỏ tới file nằm trong mã nguồn Moodle (ví dụ URL ở domain/CDN khác) nên không thể sửa trực tiếp nội dung tại đây.';
-$string['cannotwritecss']    = 'Không tìm thấy file CSS để ghi.';
-$string['notwritablecss']    = 'File tồn tại nhưng webserver không có quyền ghi (kiểm tra quyền file trên ổ đĩa).';
-$string['writefailedcss']    = 'Ghi file thất bại.';

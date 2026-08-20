@@ -2,12 +2,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Setting dạng ô nhập text: admin nhập URL (giống định dạng mobilecssurl,
- * vd https://.../theme/th_lambda_st/style/newcompany.css hoặc đường dẫn
- * tương đối /theme/th_lambda_st/style/newcompany.css). Khi bấm "Save changes"
- * trên trang settings, plugin sẽ:
- *   1. Tạo file CSS tại đúng địa chỉ đó (nếu chưa tồn tại) trong mã nguồn Moodle.
- *   2. Lưu URL đó vào theme_th_lambda_st/mobilecssurl{$companyid}.
+ * Setting dạng ô nhập text: admin chỉ nhập TÊN FILE (vd "tencongty.css"),
+ * KHÔNG nhập URL hay đường dẫn. File luôn được tạo trong thư mục CỐ ĐỊNH
+ * local/mobilecssedit/style/ (xem local_mobilecssedit_get_style_dir()).
+ * Khi bấm "Save changes" trên trang settings, plugin sẽ:
+ *   1. Tạo file CSS với tên đó trong local/mobilecssedit/style/ (nếu chưa tồn tại).
+ *   2. Lưu URL công khai tương ứng vào theme_th_lambda_st/mobilecssurl{$companyid}.
  * Lần load trang kế tiếp, settings.php sẽ tự nhận ra file đã tồn tại và
  * chuyển sang hiển thị màn hình chỉnh sửa nội dung (admin_setting_cssfile)
  * như bình thường.
@@ -37,13 +37,13 @@ class local_mobilecssedit_admin_setting_createcssfile extends admin_setting {
             return get_string('nopermission', 'local_mobilecssedit');
         }
 
-        $url = is_string($data) ? trim($data) : '';
-        if ($url === '') {
+        $filename = is_string($data) ? trim($data) : '';
+        if ($filename === '') {
             // Admin không nhập gì -> không làm gì cả, không báo lỗi.
             return '';
         }
 
-        $result = local_mobilecssedit_create_css_file($url, $this->companyid);
+        $result = local_mobilecssedit_create_css_file($filename, $this->companyid);
         if (!$result['success']) {
             return $result['message'];
         }
@@ -62,7 +62,7 @@ class local_mobilecssedit_admin_setting_createcssfile extends admin_setting {
             'id'          => $this->get_id(),
             'value'       => s($data),
             'size'        => 60,
-            'placeholder' => '/local/mobilecssedit/style/tencongty.css',
+            'placeholder' => 'tencongty.css',
             'class'       => 'form-control',
         ];
 

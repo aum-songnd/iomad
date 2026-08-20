@@ -25,6 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+// Cần class readonly cho field mobilecssurl (xem local/mobilecssedit).
+// File CSS thật sự chỉ được tạo/sửa/đổi tên qua local/mobilecssedit/managecss.php,
+// nên field mobilecssurl ở đây chỉ hiển thị, không cho gõ tay để tránh lệch
+// dữ liệu so với file trên đĩa.
+require_once($CFG->dirroot . '/local/mobilecssedit/classes/admin_setting_readonlyurl.php');
+
 $ADMIN->add('themes', new admin_category('theme_th_lambda_st', 'Theme-TH-Lambda-ST'));
     
 $temp = new admin_settingpage('theme_th_lambda_st_colors',  get_string('settings_colors', 'theme_lambda'));
@@ -170,10 +176,13 @@ if (!empty($SESSION->currenteditingcompany)) {
         get_string('text_mobile_color_desc', 'theme_th_lambda_st'),
         '', $companyid, $companytext);
 
-    th_lambda_st_add_company_text($temp_company, 'mobilecssurl',
-        get_string('mobilecssurl', 'theme_th_lambda_st'),
+    $mobilecssurl_setting = new local_mobilecssedit_admin_setting_readonlyurl(
+        'theme_th_lambda_st/mobilecssurl' . $companyid,
+        get_string('mobilecssurl', 'theme_th_lambda_st') . $companytext,
         get_string('mobilecssurl_desc', 'theme_th_lambda_st'),
-        '', $companyid, $companytext, PARAM_URL);
+        $companyid
+    );
+    $temp_company->add($mobilecssurl_setting);
 
     $ADMIN->add('theme_th_lambda_st', $temp_company);
 }
