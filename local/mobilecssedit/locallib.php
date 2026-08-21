@@ -78,6 +78,35 @@ function local_mobilecssedit_sanitize_filename(string $name): ?string {
 }
 
 /**
+ * Tạo tên file CSS "{shortname}.css" từ shortname của company, đã làm sạch
+ * qua clean_param(PARAM_FILE) rồi qua local_mobilecssedit_sanitize_filename()
+ * (phòng vệ kép) để đảm bảo luôn ra 1 tên file an toàn, không phụ thuộc vào
+ * việc admin gõ tay tên file nữa (shortname vốn đã là định danh duy nhất
+ * của company nên dùng lại làm tên file luôn, tránh trùng lặp giữa các
+ * company và tránh phải hỏi thêm admin 1 giá trị mới).
+ *
+ * @param string $shortname Shortname của company (company->shortname).
+ * @return string|null Tên file dạng "shortname.css" đã làm sạch, hoặc null
+ *                      nếu shortname rỗng / không còn ký tự hợp lệ nào sau
+ *                      khi làm sạch.
+ */
+function local_mobilecssedit_filename_from_shortname(string $shortname): ?string {
+    $shortname = trim($shortname);
+    if ($shortname === '') {
+        return null;
+    }
+
+    // clean_param(PARAM_FILE) loại bỏ dấu tiếng Việt, khoảng trắng và mọi
+    // ký tự không an toàn cho tên file (Moodle core).
+    $base = clean_param($shortname, PARAM_FILE);
+    if ($base === '' || $base === '.' || $base === '..') {
+        return null;
+    }
+
+    return local_mobilecssedit_sanitize_filename($base . '.css');
+}
+
+/**
  * Xác định đường dẫn file vật lý (trên ổ đĩa) tương ứng với giá trị
  * cấu hình "mobilecssurl" theo company hiện đang chỉnh sửa (IOMAD),
  * được lưu bởi theme_th_lambda_st dưới dạng

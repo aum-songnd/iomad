@@ -20,12 +20,24 @@ $context = context_system::instance();
 $expanded = optional_param('expanded', 0, PARAM_INT);
 
 // Xử lý submit tạo file cho 1 company (mỗi dòng trong bảng có form riêng).
+// Không còn nhận tên file do admin gõ tay nữa - tên file LUÔN được suy ra
+// từ shortname của company (vd company có shortname "abc" -> "abc.css"),
+// đảm bảo mỗi company có đúng 1 file CSS dễ nhận diện, tránh gõ nhầm/trùng
+// tên giữa các company.
 $createforcompany = optional_param('createforcompany', 0, PARAM_INT);
 if ($createforcompany) {
     require_sesskey();
 
-    $cssurl = optional_param('cssurl', '', PARAM_RAW_TRIMMED);
-    $result = local_mobilecssedit_create_css_file($cssurl, $createforcompany);
+    $companyrec = $DB->get_record('company', ['id' => $createforcompany], 'id, shortname');
+    $filename = $companyrec ? local_mobilecssedit_filename_from_shortname($companyrec->shortname) : null;
+
+    if ($filename === null) {
+        $redirecturl = new moodle_url($pageurl, ['expanded' => $createforcompany]);
+        redirect($redirecturl, get_string('invalidshortname', 'local_mobilecssedit'), null,
+            \core\output\notification::NOTIFY_ERROR);
+    }
+
+    $result = local_mobilecssedit_create_css_file($filename, $createforcompany);
 
     $notiftype = $result['success']
         ? \core\output\notification::NOTIFY_SUCCESS
@@ -35,14 +47,25 @@ if ($createforcompany) {
     redirect($redirecturl, $result['message'], null, $notiftype);
 }
 
-// Xử lý submit đổi tên file đã tồn tại cho 1 company (mỗi dòng trong bảng
-// có form riêng). Chỉ đổi tên file trên đĩa (trong thư mục cố định), không
-// đổi nội dung file.
+// Xử lý submit CẬP NHẬT tên file cho khớp lại với shortname hiện tại của
+// company (mỗi dòng trong bảng có form riêng). Trước đây admin phải tự gõ
+// tên file mới - giờ không còn nữa: nếu company đổi shortname sau khi đã
+// tạo file, tên file cũ sẽ không tự theo kịp, nên nút này luôn tính lại
+// tên file mới nhất từ shortname hiện tại rồi đổi tên file trên đĩa cho
+// khớp (không đổi nội dung file).
 $renameforcompany = optional_param('renameforcompany', 0, PARAM_INT);
 if ($renameforcompany) {
     require_sesskey();
 
-    $newfilename = optional_param('newfilename', '', PARAM_RAW_TRIMMED);
+    $companyrec = $DB->get_record('company', ['id' => $renameforcompany], 'id, shortname');
+    $newfilename = $companyrec ? local_mobilecssedit_filename_from_shortname($companyrec->shortname) : null;
+
+    if ($newfilename === null) {
+        $redirecturl = new moodle_url($pageurl, ['expanded' => $renameforcompany]);
+        redirect($redirecturl, get_string('invalidshortname', 'local_mobilecssedit'), null,
+            \core\output\notification::NOTIFY_ERROR);
+    }
+
     $result = local_mobilecssedit_rename_css_file($renameforcompany, $newfilename);
 
     $notiftype = $result['success']
@@ -87,14 +110,14 @@ if ($savecontentfor) {
 // Lấy danh sách company: toàn bộ nếu có quyền quản trị hệ thống công ty,
 // ngược lại chỉ những company mà user hiện tại được quản lý (theo IOMAD).
 if (has_capability('block/iomad_company_admin:company_add', $context)) {
-    $companies = $DB->get_records('company', [], 'name ASC', 'id, name');
+    $companies = $DB->get_records('company', [], 'name ASC', 'id, name, shortname');
 } else {
     $companies = [];
     if (class_exists('company') && method_exists('company', 'get_companies_select')) {
         $mycompanylist = company::get_companies_select(true);
         if (!empty($mycompanylist)) {
             [$insql, $inparams] = $DB->get_in_or_equal(array_keys($mycompanylist));
-            $companies = $DB->get_records_select('company', "id $insql", $inparams, 'name ASC', 'id, name');
+            $companies = $DB->get_records_select('company', "id $insql", $inparams, 'name ASC', 'id, name, shortname');
         }
     }
 }
@@ -111,14 +134,47 @@ echo html_writer::tag('style', '
         flex-basis: 100%;
         width: 100%;
     }
+    /* Khi cột "Nội dung CSS" cao lên (mở khối xem/sửa), mặc định trình
+       duyệt căn giữa theo chiều dọc (vertical-align: middle) cho các ô
+       khác trong cùng hàng, khiến tên/shortname company bị trôi xuống
+       giữa thay vì nằm ngay phía trên, ngang hàng với link/nút đầu tiên.
+       Ép về "top" để tên/shortname luôn đứng bên trên, thẳng hàng với
+       đầu nội dung của cột CSS, dù cột đó cao bao nhiêu đi nữa. */
+    .mobilecssedit-table td,
+    .mobilecssedit-table th {
+        vertical-align: top;
+    }
 ');
+
+// Đổi chữ trên nút <summary> theo trạng thái đóng/mở của <details> để dễ
+// hiểu hơn (vd "Xem/Sửa nội dung" khi đóng -> "Đóng lại" khi đang mở),
+// thay vì giữ nguyên 1 chữ "Xem/Sửa nội dung" kể cả lúc đang mở sẵn.
+echo html_writer::script("
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.mobilecssedit-details').forEach(function(d) {
+        var s = d.querySelector('summary');
+        if (!s) { return; }
+        var opentext = s.getAttribute('data-open-text');
+        var closetext = s.getAttribute('data-close-text');
+        s.textContent = d.open ? closetext : opentext;
+        d.addEventListener('toggle', function() {
+            s.textContent = d.open ? closetext : opentext;
+        });
+    });
+});
+");
 
 if (empty($companies)) {
     echo $OUTPUT->notification(get_string('nocompanies', 'local_mobilecssedit'), 'info');
 } else {
     $table = new html_table();
-    $table->head  = [get_string('companyname', 'local_mobilecssedit'), get_string('cssfilecontent', 'local_mobilecssedit')];
-    $table->align = ['left', 'left'];
+    $table->attributes['class'] = 'generaltable mobilecssedit-table';
+    $table->head  = [
+        get_string('companyname', 'local_mobilecssedit'),
+        get_string('companyshortname', 'local_mobilecssedit'),
+        get_string('cssfilecontent', 'local_mobilecssedit'),
+    ];
+    $table->align = ['left', 'left', 'left'];
     $table->width = '100%';
 
     foreach ($companies as $company) {
@@ -136,38 +192,43 @@ if (empty($companies)) {
                 s($configuredurl),
                 ['target' => '_blank', 'rel' => 'noopener']
             );
-            $cssfilecell .= html_writer::tag('div',
-                get_string('cssfileexists', 'local_mobilecssedit'),
-                ['class' => 'small text-muted']);
 
-            $renameformattrs = [
-                'method' => 'post',
-                'action' => $pageurl->out(false),
-                'class'  => 'form-inline flex-shrink-0',
-            ];
-            $renameinner = html_writer::empty_tag('input', [
-                'type'  => 'hidden',
-                'name'  => 'sesskey',
-                'value' => sesskey(),
-            ]);
-            $renameinner .= html_writer::empty_tag('input', [
-                'type'  => 'hidden',
-                'name'  => 'renameforcompany',
-                'value' => $company->id,
-            ]);
-            $renameinner .= html_writer::empty_tag('input', [
-                'type'        => 'text',
-                'name'        => 'newfilename',
-                'value'       => basename($csspath),
-                'placeholder' => 'tencongty.css',
-                'class'       => 'form-control mr-2',
-                'style'       => 'min-width:220px;display:inline-block;width:auto;',
-            ]);
-            $renameinner .= html_writer::tag('button',
-                get_string('renamecssfile', 'local_mobilecssedit'),
-                ['type' => 'submit', 'class' => 'btn btn-secondary btn-sm']);
+            // Tên file "đúng" theo shortname hiện tại của company - dùng để
+            // so sánh với tên file thực tế trên đĩa, phát hiện trường hợp
+            // company đã đổi shortname sau khi file được tạo (file cũ
+            // không tự đổi theo).
+            $currentfilename = basename($csspath);
+            $expectedfilename = local_mobilecssedit_filename_from_shortname($company->shortname);
+            $outofsync = ($expectedfilename !== null && $expectedfilename !== $currentfilename);
 
-            $renameform = html_writer::tag('form', $renameinner, $renameformattrs);
+            if ($outofsync) {
+                // Tên file đang lệch so với shortname hiện tại -> hiện nút
+                // để đồng bộ lại, không cần gõ tay tên file nữa.
+                $renameformattrs = [
+                    'method' => 'post',
+                    'action' => $pageurl->out(false),
+                    'class'  => 'form-inline flex-shrink-0',
+                ];
+                $renameinner = html_writer::empty_tag('input', [
+                    'type'  => 'hidden',
+                    'name'  => 'sesskey',
+                    'value' => sesskey(),
+                ]);
+                $renameinner .= html_writer::empty_tag('input', [
+                    'type'  => 'hidden',
+                    'name'  => 'renameforcompany',
+                    'value' => $company->id,
+                ]);
+                $renameinner .= html_writer::tag('button',
+                    get_string('updatefilenamefromshortname', 'local_mobilecssedit'),
+                    ['type' => 'submit', 'class' => 'btn btn-secondary btn-sm']);
+
+                $renameform = html_writer::tag('form', $renameinner, $renameformattrs);
+            } else {
+                // Tên file đã khớp shortname hiện tại -> không cần đổi gì,
+                // không hiện gì thêm ở cột này.
+                $renameform = '';
+            }
 
             // Khối xem/sửa nội dung dạng "xổ xuống" (native <details>).
             $filecontent = file_get_contents($csspath);
@@ -196,15 +257,27 @@ if (empty($companies)) {
                 get_string('savechanges'),
                 ['type' => 'submit', 'class' => 'btn btn-primary btn-sm mt-1']);
 
+            $isopen = ($expanded == $company->id);
+
             $detailsattrs = ['class' => 'mobilecssedit-details'];
-            if ($expanded == $company->id) {
-                // Vừa lưu/mở dòng này -> tự động mở lại sau khi submit.
+            if ($isopen) {
+                // Vừa lưu/mở dòng này -> tự động mở lại sau khi submit, và
+                // hiển thị đúng ngay từ lần render đầu tiên (không đợi JS)
+                // để khối nội dung luôn nằm bên dưới, xuống dòng riêng như
+                // thiết kế ban đầu, không bị nhấp nháy sai chữ/sai vị trí.
                 $detailsattrs['open'] = 'open';
             }
 
             $details = html_writer::tag('summary',
-                get_string('editcssfile', 'local_mobilecssedit'),
-                ['class' => 'btn btn-outline-primary btn-sm', 'style' => 'cursor:pointer;']);
+                $isopen
+                    ? get_string('closecssfile', 'local_mobilecssedit')
+                    : get_string('editcssfile', 'local_mobilecssedit'),
+                [
+                    'class' => 'btn btn-outline-primary btn-sm',
+                    'style' => 'cursor:pointer;',
+                    'data-open-text'  => get_string('editcssfile', 'local_mobilecssedit'),
+                    'data-close-text' => get_string('closecssfile', 'local_mobilecssedit'),
+                ]);
             $details .= html_writer::tag('form', $contentform, $contentformattrs);
 
             $detailsblock = html_writer::tag('details', $details, $detailsattrs);
@@ -222,7 +295,12 @@ if (empty($companies)) {
 
             $cssfilecell .= $actionsrow;
         } else {
-            // Chưa có file -> ô nhập URL + nút tạo, nằm trong 1 form riêng cho dòng này.
+            // Chưa có file -> không còn ô nhập tên file nữa, chỉ 1 nút tạo
+            // duy nhất: tên file LUÔN được suy ra tự động từ shortname của
+            // company (vd shortname "abc" -> tạo "abc.css"), nằm trong 1
+            // form riêng cho dòng này.
+            $targetfilename = local_mobilecssedit_filename_from_shortname($company->shortname);
+
             $formattrs = [
                 'method' => 'post',
                 'action' => $pageurl->out(false),
@@ -238,21 +316,23 @@ if (empty($companies)) {
                 'name'  => 'createforcompany',
                 'value' => $company->id,
             ]);
-            $inner .= html_writer::empty_tag('input', [
-                'type'        => 'text',
-                'name'        => 'cssurl',
-                'placeholder' => 'tencongty.css',
-                'class'       => 'form-control mr-2',
-                'style'       => 'min-width:320px;display:inline-block;width:auto;',
-            ]);
-            $inner .= html_writer::tag('button',
-                get_string('createcssfile', 'local_mobilecssedit'),
-                ['type' => 'submit', 'class' => 'btn btn-primary btn-sm']);
 
-            $cssfilecell = html_writer::tag('form', $inner, $formattrs);
+            if ($targetfilename === null) {
+                // Shortname rỗng hoặc không còn ký tự hợp lệ nào sau khi làm
+                // sạch -> không thể suy ra tên file, không cho bấm tạo.
+                $cssfilecell = html_writer::tag('div',
+                    get_string('invalidshortname', 'local_mobilecssedit'),
+                    ['class' => 'text-danger small']);
+            } else {
+                $inner .= html_writer::tag('button',
+                    get_string('createcssfilefor', 'local_mobilecssedit', s($targetfilename)),
+                    ['type' => 'submit', 'class' => 'btn btn-primary btn-sm']);
+
+                $cssfilecell = html_writer::tag('form', $inner, $formattrs);
+            }
         }
 
-        $table->data[] = [s($company->name), $cssfilecell];
+        $table->data[] = [s($company->name), s($company->shortname), $cssfilecell];
     }
 
     echo html_writer::table($table);
