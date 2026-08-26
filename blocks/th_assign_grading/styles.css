@@ -1,0 +1,80 @@
+.th_link_attempt_confirm {
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5px;
+    min-width: 100px;
+}
+
+.th_link_attempt_confirm:hover {
+    background-color: #218838;
+    color: #fff;
+}
+
+.th_link_attempt_confirm:visited {
+    color: #fff;
+}
+
+.th_wait{
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #e2725b;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.th_wait:hover {
+    background-color: #e93f1d;
+    color: #fff;
+}
+
+.th_wait:visited {
+    color: #fff;
+}
+
+.th_success {
+    display: inline-block;
+    padding: 7px 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.th_success:hover {
+    color: #fff !important;  
+    background-color: #007bff !important;
+}
+
+.th_success:visited {
+    color: #fff;  
+    background-color: #007bff !important;
+}
+
+.th_link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block; /* Optional, use if needed to control the layout */
+    max-width: 100px; /* Adjust the width as needed */
+}
+
+.th_row_error {
+    background-color: #ffe6e6 !important;
+    border-left: 4px solid red;
+}

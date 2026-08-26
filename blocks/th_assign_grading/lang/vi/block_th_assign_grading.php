@@ -1,0 +1,67 @@
+﻿<?php
+defined('MOODLE_INTERNAL') || die;
+$string['pluginname'] = 'TH Quản lý phân chia công việc cho CTV';
+$string['title'] = 'Quản lý phân chia công việc cho CTV';
+$string['th_assign_grading'] = 'Quản lý phân chia công việc cho CTV';
+$string['th_assign_grading:addinstance'] = 'Thêm block chấm điểm bài nộp';
+$string['th_assign_grading:myaddinstance'] = 'Thêm block chấm điểm bài nộp vào bảng điều khiển cá nhân';
+$string['th_assign_grading:view'] = 'Xem block chấm điểm';
+$string['th_assign_grading:managepages'] = 'Quản lý trang chấm điểm';
+$string['th_assign_gradingsettings'] = 'th_assign_grading';
+$string['th_assign_grading:approve_grading'] = 'th_assign_grading:approve_grading';
+$string['th_assign_grading:delete'] = 'th_assign_grading:delete';
+$string['reportlink'] = 'Danh sách';
+$string['role_grading'] = 'Quyền chấm điểm';
+$string['des_role_grading'] = 'Tên ngắn gọn của quyền chấm điêm (CTV)';
+$string['textfields'] = 'Filter';
+$string['noctv'] = 'Không có CTV';
+$string['nocourse'] = 'Không có khóa học';
+$string['breadcrumb'] = 'th_assign_grading';
+$string['invalidcourse'] = 'th_assign_grading';
+$string['from_date'] = 'Từ ngày';
+$string['to_date'] = 'Đến ngày'; 
+$string['scored'] = 'Đã chấm';   
+$string['not_scored_yet'] = 'Chưa chấm';   
+$string['all'] = 'Tất cả';   
+$string['status'] = 'Trạng thái'; 
+$string['submit'] = 'Tra cứu';
+$string['crm'] = 'AUM code';
+$string['des_crm'] = 'AUM code';
+$string['approvesubmit'] = 'Duyệt';
+$string['approvalfailedrows'] = 'Không thể duyệt các dòng sau: {$a}';
+$string['massapprovalsuccess'] = 'Đã duyệt thành công {$a->success}/{$a->total} dòng.';
+$string['selectuser'] = 'Chọn CTV chấm bài';
+$string['selectcourse'] = 'Chọn khóa học';
+$string['selectstatus'] = 'Chọn trạng thái chấm';
+$string['view'] = 'Xem';
+$string['invaliddate'] = 'Ngày kết thúc phải lớn hơn ngày bắt đầu';
+$string['noselection'] = 'Vui lòng chọn...';
+
+$string['eventapprovalcompleted'] = 'Approval action completed';
+$string['stt'] = 'STT';
+$string['fullname'] = 'Tên học viên';
+$string['aummcode'] = 'Mã AUM';
+$string['assigncount'] = 'Số lượt gán';
+$string['usedcount'] = 'Đã sử dụng';
+$string['delete'] = 'Xóa';
+
+$string['selectall'] = 'Chọn tất cả';
+$string['gradername'] = 'Tên CTV';
+$string['coursename'] = 'Tên khóa';
+$string['quizname'] = 'Tên bài kiểm tra';
+$string['submissionlink'] = 'Link bài chấm';
+$string['studentname'] = 'Tên học viên';
+$string['submittedat'] = 'Ngày nộp';
+$string['status'] = 'Trạng thái';
+$string['approval'] = 'Phê duyệt';
+$string['approvedby'] = 'Người phê duyệt';
+$string['delete'] = 'Xóa';
+$string['update'] = 'Sửa';
+
+$string['crm'] = 'Mã AUM';
+$string['des_crm'] = 'Mã AUM';
+
+$string['assign_turns_label'] = 'Lượt chấm';
+$string['assign_turns_required'] = 'Vui lòng nhập lượt chấm.';
+$string['assign_turns_positive_int'] = 'Lượt chấm phải là số nguyên lớn hơn 0.';
+$string['nocompany'] = 'Không có đơn vị';
