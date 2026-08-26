@@ -26,11 +26,15 @@
 
 require('../config.php');
 require_once('lib.php');
+require_once('classes/th_login_v3.php');
+require_once('classes/th_login_v4.php');
+require_once($CFG->dirroot . '/login/lib.php');
 
 redirect_if_major_upgrade_required();
 
 $testsession = optional_param('testsession', 0, PARAM_INT); // test session works properly
 $anchor      = optional_param('anchor', '', PARAM_RAW);     // Used to restore hash anchor to wantsurl.
+$loginredirect = optional_param('loginredirect', 1, PARAM_BOOL);   // Used to bypass alternateloginurl.
 
 $resendconfirmemail = optional_param('resendconfirmemail', false, PARAM_BOOL);
 
@@ -41,7 +45,6 @@ if (!empty($wantedcompanyid)) {
 } else {
     $wantedcompanyshort = '';
 }
-
 // It might be safe to do this for non-Behat sites, or there might
 // be a security risk. For now we only allow it on Behat sites.
 // If you wants to do the analysis, you may be able to remove the
@@ -77,16 +80,60 @@ if (!empty($wantedcompanyid) && !$company = $DB->get_record('company', array('id
     }
 }
 
+$option='';
+if (!isset($_COOKIE['option'])) {
+    $config_login = get_config('local_th_config_login');
+    if ($config_login->selectsecret != '') {
+        $selectsecret = explode(",", $config_login->selectsecret);
+        foreach ($selectsecret as $key => $value) {
+            if ($value == 'cloudflare' && !empty($config_login->sitekey) && !empty($config_login->secretkey)) {
+                $option = $value;
+                break;
+            } else if ($value == 'recaptcha' && !empty($CFG->recaptchapublickey) && !empty($CFG->recaptchaprivatekey)) {
+                $option = $value;
+                break;
+            } else if ($value == 'email') {
+                $option = $value;
+                break;
+            }
+        }
+        // print_object($option);
+        set_th_option_cookie($option);
+    }
+} else {
+    $option = get_th_option_cookie();
+    // print_object($option);
+    $config_login = get_config('local_th_config_login');
+    if ($config_login->selectsecret != '') {
+        $selectsecret = explode(",", $config_login->selectsecret);
+        if (!in_array($option, $selectsecret)) {
+            $option = $selectsecret[0];
+            set_th_option_cookie($option);
+        }
+    } else {
+        $option = '';
+    }
+}
+// print_object($option);
+
 $context = context_system::instance();
-$PAGE->set_url("$CFG->wwwroot/login/index.php");
+$PAGE->set_url("$CFG->wwwroot/".get_th_login_dir()."/index.php");
 $PAGE->set_context($context);
-$PAGE->set_pagelayout('login');
-$PAGE->set_cacheable(false);
+$PAGE->requires->js_call_amd('local_th_config_login/dropdown');
+$version = substr($CFG->release, 0, 1);
+if ($version == 3) {
+    $PAGE->set_pagelayout('login3');
+} else if ($version == 4) {
+    $PAGE->set_pagelayout('login4');
+} else {
+    $PAGE->set_pagelayout('login');
+}
+$loginurl = new moodle_url('/' . get_th_login_dir() .'/index.php');
 
 /// Initialize variables
 $errormsg = '';
 $errorcode = 0;
-
+$infomsg = '';
 // IOMAD - Set the theme if the server hostname matches one of ours.
 if ($DB->get_manager()->table_exists('company') &&
     $company = $DB->get_record('company', array('hostname' => $_SERVER["SERVER_NAME"]))) {
@@ -101,7 +148,6 @@ if ($DB->get_manager()->table_exists('company') &&
 } else {
     $hascompanybyurl = false;
 }
-
 // login page requested session test
 if ($testsession) {
     if ($testsession == $USER->id) {
@@ -164,6 +210,7 @@ if ($user !== false or $frm !== false or $errormsg !== '') {
     }
     if ($user) {
         $frm->username = $user->username;
+        $frm->option = $option;
     } else {
         $frm = data_submitted();
     }
@@ -182,7 +229,6 @@ if ($anchor && isset($SESSION->wantsurl) && strpos($SESSION->wantsurl, '#') === 
 }
 
 /// Check if the user has actually submitted login data to us
-
 if ($frm and isset($frm->username)) {                             // Login WITH cookies
 
     $frm->username = trim(core_text::strtolower($frm->username));
@@ -194,17 +240,53 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
             $user = null;
         }
     }
-
     if ($user) {
         // The auth plugin has already provided the user via the loginpage_hook() called above.
     } else if (($frm->username == 'guest') and empty($CFG->guestloginbutton)) {
         $user = false;    /// Can't log in as guest if guest button is disabled
         $frm = false;
     } else {
-        if (empty($errormsg)) {
-            $logintoken = isset($frm->logintoken) ? $frm->logintoken : '';
-            $user = authenticate_user_login($frm->username, $frm->password, false, $errorcode, $logintoken);
+
+        $loginrecaptcha = false;
+        $logintoken = isset($frm->logintoken) ? $frm->logintoken : '';
+        if (empty($errormsg) and !empty($option)) {
+            $config_login = get_config('local_th_config_login');
+            if ($option == 'clouldflare') {
+                if (!empty($config_login->sitekey) && !empty($config_login->secretkey)) {
+                    if ($frm->{'cf-turnstile-response'}) {
+                        $loginrecaptcha = $frm->{'cf-turnstile-response'};
+                    } else {
+                        $loginrecaptcha = '';
+                    }
+                } else {
+                    $loginrecaptcha = false;
+                }
+            } else if ($option == 'recaptcha') {
+
+                if (!empty($CFG->recaptchapublickey) && !empty($CFG->recaptchaprivatekey)) {
+                    if ($frm->{'g-recaptcha-response'}) {
+                        $loginrecaptcha = $frm->{'g-recaptcha-response'};
+                    } else {
+                        $loginrecaptcha = '';
+                    }
+                } else {
+                    $loginrecaptcha = false;
+                }
+            } else if ($option == 'email') {
+                if (!empty($frm->otp)) {
+                    if ($frm->otp) {
+                        $loginrecaptcha = $frm->otp;
+                    } else {
+                        $loginrecaptcha = '';
+                    }
+                } else {
+                    $loginrecaptcha = false;
+                }
+            } else {
+                $loginrecaptcha = false;
+            }
         }
+        $user = th_authenticate_user_login($frm->username, $frm->password, false, $errorcode, $logintoken, $loginrecaptcha, $option);
     }
 
     // Intercept 'restored' users to provide them with info & reset password
@@ -246,7 +328,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
                 }
             }
             echo $OUTPUT->box(get_string("emailconfirmsent", "", s($user->email)), "generalbox boxaligncenter");
-            $resendconfirmurl = new moodle_url('/login/index.php',
+            $resendconfirmurl = new moodle_url('/' . get_th_login_dir() .'/index.php',
                 [
                     'username' => $frm->username,
                     'password' => $frm->password,
@@ -259,7 +341,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
             die;
         }
 
-        // Check if the company in the session is still correct.
+         // Check if the company in the session is still correct.
         if ($DB->get_manager()->table_exists('company') &&
             !has_capability('block/iomad_company_admin:company_view_all', context_system::instance())) {
             $currenteditingcompany = 0;
@@ -300,7 +382,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
 
         \core\session\manager::apply_concurrent_login_limit($user->id, session_id());
 
-        // IOMAD
+         // IOMAD
         // Update the company for the user if there is one.
         if ($DB->get_manager()->table_exists('company')) {
             $mycompanyid = iomad::get_my_companyid(context_system::instance(), false);
@@ -342,7 +424,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
                 $passwordchangeurl = $CFG->wwwroot.'/login/change_password.php';
             }
             $days2expire = $userauth->password_expire($USER->username);
-            $PAGE->set_title($loginsite);
+            $PAGE->set_title("$site->fullname: $loginsite");
             $PAGE->set_heading("$site->fullname");
             if (intval($days2expire) > 0 && intval($days2expire) < intval($userauth->config->expiration_warning)) {
                 echo $OUTPUT->header();
@@ -368,6 +450,10 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
 
         // Discard any errors before the last redirect.
         unset($SESSION->loginerrormsg);
+        unset($SESSION->logininfomsg);
+
+        // Discard loginredirect if we are redirecting away.
+        unset($SESSION->loginredirect);
 
         // test the session actually works by redirecting to self
         $SESSION->wantsurl = $urltogo;
@@ -377,6 +463,10 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
         if (empty($errormsg)) {
             if ($errorcode == AUTH_LOGIN_UNAUTHORISED) {
                 $errormsg = get_string("unauthorisedlogin", "", $frm->username);
+            } else if ($errorcode == 6) {
+                $errormsg = get_string('error_verify', 'local_th_config_login');
+            } else if ($errorcode == AUTH_LOGIN_LOCKOUT) {
+                $errormsg = get_string('invailpassword', 'local_th_config_login', $CFG->lockoutduration / 60);
             } else {
                 $errormsg = get_string("invalidlogin");
                 $errorcode = 3;
@@ -407,8 +497,8 @@ if (empty($SESSION->wantsurl)) {
 }
 
 /// Redirect to alternative login URL if needed
-if (!empty($CFG->alternateloginurl)) {
-    $loginurl = new moodle_url($CFG->alternateloginurl);
+if (empty($CFG->alternateloginurl)) {
+    $loginurl = new moodle_url('/login/index.php');
 
     $loginurlstr = $loginurl->out(false);
 
@@ -441,7 +531,6 @@ if (empty($frm->username) && $authsequence[0] != 'shibboleth') {  // See bug 518
 
     $frm->password = "";
 }
-
 $potentialidps = array();
 foreach($authsequence as $authname) {
     $authplugin = get_auth_plugin($authname);
@@ -478,9 +567,23 @@ if (isloggedin() and !isguestuser()) {
     echo $OUTPUT->confirm(get_string('alreadyloggedin', 'error', fullname($USER)), $logout, $continue);
     echo $OUTPUT->box_end();
 } else {
-    $loginform = new \core_auth\output\login($authsequence, $frm->username);
+    $version = substr($CFG->release, 0, 1);
+    if ($version == 3) {
+        $loginform = new \core_auth\output\th_login_v3($authsequence, $option, $frm->username);
+    } else if ($version == 4) {
+        $loginform = new \core_auth\output\th_login_v4($authsequence, $option, $frm->username);
+    } else {
+        $loginform = new \core_auth\output\login($authsequence, $frm->username);
+    }
     $loginform->set_error($errormsg);
     echo $OUTPUT->render($loginform);
 }
 
 echo $OUTPUT->footer();
+?>
+<noscript>
+    <div class="loginerrors mt-3">
+        <a href="#" id="loginerrormessage" class="accesshide">Sorry, your browser does not support JavaScript!</a>
+        <div class="alert alert-danger" role="alert" data-aria-autofocus="true">Sorry, your browser does not support JavaScript!</div>
+    </div>
+</noscript>
