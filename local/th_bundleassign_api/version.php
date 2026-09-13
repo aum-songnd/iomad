@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_th_bundleassign_api';
 $plugin->release = '1.99.0';
-$plugin->version = 2026041502; // YYYYMMDDXX (year, month, day, 24-hr time)
+$plugin->version = 2026082100; // YYYYMMDDXX (year, month, day, 24-hr time)
 $plugin->dependencies = array(
 	'local_thlib' => '2021100000',
 );

@@ -1,7 +1,7 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2026072900;
+$plugin->version = 2026082100;
 $plugin->requires = 2016070700;
 $plugin->component = 'theme_th_lambda_st';
 $plugin->dependencies = [
